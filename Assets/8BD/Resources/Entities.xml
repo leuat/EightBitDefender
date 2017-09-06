@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SerializedEntities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <entities>
+    <!-- WEAPONS -->
+
+    <SerializedEntity>
+      <typeName>SmallBullet</typeName>
+      <value>0</value>
+      <maxDistance>3</maxDistance>
+        <isTargetable>false</isTargetable>
+        <minDamage>1</minDamage>
+        <maxDamage>1</maxDamage>
+      <detonateDistance>0.1</detonateDistance>
+        <homing>false</homing>
+      <body>
+        <moveSpeed>3</moveSpeed>
+        <minSpeed>3</minSpeed>
+        <rotateSpeed>0</rotateSpeed>
+        <scale>2</scale>
+        <texture>entity_bullet</texture>
+        <rotateTexture>0</rotateTexture>
+      
+      </body>
+    </SerializedEntity>
+
+
+
+    <!-- MONSTERS -->
+    
+    <SerializedEntity>
+      <typeName>Sopwith</typeName>
+      <value>1</value>
+      <body>
+        <moveSpeed>2</moveSpeed>
+        <minSpeed>1</minSpeed>
+        <rotateSpeed>1</rotateSpeed>
+        <scale>2</scale>
+        <texture>entity_sopwith</texture>
+        <rotateTexture>-90</rotateTexture>
+        <directionFromSpeed>true</directionFromSpeed>
+
+
+        <weapon>
+          <entityWeapon>SmallBullet</entityWeapon>
+          <reloadSpeed>0.5</reloadSpeed>
+          <autoShoot>true</autoShoot>
+          <weaponMaxDistance>3</weaponMaxDistance>
+        </weapon>
+        
+      </body>
+    </SerializedEntity>
+    <SerializedEntity>
+      <typeName>ParaTrooper</typeName>
+      <value>1</value>
+      <body>
+        <moveSpeed>0</moveSpeed>
+        <directionFromSpeed>false</directionFromSpeed>
+        <scale>1</scale>
+        <texture>entity_ptrooper_body</texture>
+        <rotateTexture>90</rotateTexture>
+        <bodyParts>
+          <SerializedBodyPart>
+            <moveSpeed>0</moveSpeed>
+            <rotateSpeed>0</rotateSpeed>
+            <directionFromSpeed>false</directionFromSpeed>
+            <translate_x>0</translate_x>
+            <translate_y>0</translate_y>
+            <translate_z>0</translate_z>
+            <texture>entity_ptrooper_head</texture>
+            <rotateTexture>90</rotateTexture>
+            <scale>1</scale>
+            <weapon>
+              <entityWeapon>SmallBullet</entityWeapon>
+              <reloadSpeed>0.8</reloadSpeed>
+              <autoShoot>true</autoShoot>
+              <weaponMaxDistance>5</weaponMaxDistance>
+            </weapon>
+
+            <bodyParts />
+          </SerializedBodyPart>
+        </bodyParts>
+      </body>
+    </SerializedEntity>
+  </entities>
+</SerializedEntities>
