@@ -6,23 +6,45 @@ using UnityEngine;
 namespace LemonSpawn
 {
 
-    public class MainGame : MonoBehaviour
+    public class MainMenu : MonoBehaviour
     {
 
 
         // Use this for initialization
         EntityCollection eCollection = new EntityCollection();
 
+        MenuItem menu = null;
+        MenuLayout mLayout;
+
         float deltaTime = 0.0f;
 
 
-        Texture2D test=null;
+        public void LoadGame(System.Object o)
+        {
+            string name = (string)o;
+            Debug.Log(name);
+
+        }
+
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
+
+        public void InvokeMenu()
+        {
+            if (BentoMenu.currentMessage == "quit")
+                Quit();
+            if (BentoMenu.currentMessage == "start")
+                Debug.Log("Start");
+        }
+
+
         void OnGUI()
         {
-//            if (test == null)
-  //              test = (Texture2D)Resources.Load("Textures/entity_sopwith");
-    //        GUI.DrawTexture(new Rect(0, 0, 300, 300), test);
 
+//            menu.Render(new Vector2(0.5f*Screen.width, 0.1f*Screen.height));
 
             int w = Screen.width, h = Screen.height;
 
@@ -40,6 +62,7 @@ namespace LemonSpawn
 
         void Start()
         {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
             SerializedEntities.se = SerializedEntities.DeSerialize(Constants.EntitiesXML);
             eCollection.Test();
         }
@@ -49,6 +72,7 @@ namespace LemonSpawn
         {
             deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
             eCollection.Update();
+           
         }
     }
 }

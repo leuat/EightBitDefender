@@ -299,7 +299,7 @@ namespace LemonSpawn
             MaintainPopulation();
             UpdateGrid();
 //            UpdateCollectionSphere();
-            Debug.Log(entities.Count);
+//            Debug.Log(entities.Count);
         }
 
 

@@ -174,7 +174,6 @@ namespace LemonSpawn
             XmlSerializer deserializer = new XmlSerializer(typeof(SerializedEntities));
 
             TextAsset textAsset = (TextAsset)Resources.Load(filename);
-            Debug.Log(textAsset.text);
             TextReader textReader = new StringReader(textAsset.text);
             SerializedEntities sz = (SerializedEntities)deserializer.Deserialize(textReader);
             textReader.Close();

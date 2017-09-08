@@ -139,8 +139,8 @@ namespace LemonSpawn
             go.transform.localScale = bp.scale * Vector3.one;
             
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-            sr.sortingLayerName = "Foreground";
-            sr.sortingLayerID = 9;
+//            sr.sortingLayerName = "Foreground";
+  //          sr.sortingLayerID = 9;
             sr.color = Color.white;
             sr.sprite = Sprites.Get(bp.texture);
             if (hasCollider)
