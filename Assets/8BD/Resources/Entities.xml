@@ -7,11 +7,12 @@
       <typeName>SmallBullet</typeName>
       <value>0</value>
       <maxDistance>3</maxDistance>
-        <isTargetable>false</isTargetable>
-        <minDamage>1</minDamage>
-        <maxDamage>1</maxDamage>
-      <detonateDistance>0.1</detonateDistance>
-        <homing>false</homing>
+      <isTargetable>false</isTargetable>
+      <isWeapon>true</isWeapon>
+      <minDamage>5</minDamage>
+      <maxDamage>5</maxDamage>
+      <detonateDistance>0.5</detonateDistance>
+      <homing>false</homing>
       <body>
         <moveSpeed>3</moveSpeed>
         <minSpeed>3</minSpeed>
@@ -19,14 +20,14 @@
         <scale>2</scale>
         <texture>entity_bullet</texture>
         <rotateTexture>0</rotateTexture>
-      
+
       </body>
     </SerializedEntity>
 
 
 
     <!-- MONSTERS -->
-    
+
     <SerializedEntity>
       <typeName>Sopwith</typeName>
       <value>1</value>
@@ -46,18 +47,20 @@
           <autoShoot>true</autoShoot>
           <weaponMaxDistance>3</weaponMaxDistance>
         </weapon>
-        
+
       </body>
     </SerializedEntity>
     <SerializedEntity>
       <typeName>ParaTrooper</typeName>
       <value>1</value>
+      <deathSound>explosion1</deathSound>
       <body>
         <moveSpeed>0</moveSpeed>
         <directionFromSpeed>false</directionFromSpeed>
         <scale>1</scale>
         <texture>entity_ptrooper_body</texture>
         <rotateTexture>90</rotateTexture>
+
         <bodyParts>
           <SerializedBodyPart>
             <moveSpeed>0</moveSpeed>

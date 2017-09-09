@@ -193,10 +193,17 @@ namespace LemonSpawn
         public Sprite sprite;
         public string name;
     }
+    class LASprite
+    {
+        public Sprite[] sprite;
+        public string name;
+    }
 
     class Sprites
     {
         public static List<LSprite> sprites = new List<LSprite>();
+        public static List<LASprite> a_sprites = new List<LASprite>();
+
         public static Sprite Get(string name)
         {
             foreach (LSprite s in sprites)
@@ -210,6 +217,47 @@ namespace LemonSpawn
                 new Rect(0, 0, t.width, t.height), new Vector2(0.5f, 0.5f));
 
             sprites.Add(ls);
+            return ls.sprite;
+
+        }
+
+
+
+        public static Sprite GetSprite(string name)
+        {
+            foreach (LSprite s in sprites)
+                if (s.name == name)
+                    return s.sprite;
+
+            LSprite ls = new LSprite();
+            ls.name = name;
+            Sprite t = (Sprite)Resources.Load("Textures/" + name);
+            if (t==null)
+            {
+                UnityEngine.Debug.Log("COULD NOT LOAD SPRITE  " + name);
+            }
+            ls.sprite = t;
+            sprites.Add(ls);
+            return ls.sprite;
+
+        }
+
+        public static Sprite[] GetASprite(string name)
+        {
+            foreach (LASprite s in a_sprites)
+                if (s.name == name)
+                    return s.sprite;
+
+            LASprite ls = new LASprite();
+            ls.name = name;
+            Sprite[] t = (Sprite[])Resources.LoadAll<Sprite>("Textures/" + name);
+//            UnityEngine.Debug.Log("tlen:" + t.Length);
+            if (t == null)
+            {
+                UnityEngine.Debug.Log("COULD NOT LOAD SPRITES  " + name);
+            }
+            ls.sprite = t;
+            a_sprites.Add(ls);
             return ls.sprite;
 
         }

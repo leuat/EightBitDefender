@@ -76,33 +76,35 @@ namespace LemonSpawn
         public List<EntityBodyPart> bodyparts = new List<EntityBodyPart>();
         public Vector3 direction = new Vector3(0, 1, 0);
 
-/*        public void Move(Particle p)
-        {
-            p.A = p.A + p.Dir * serializedBodyPart.moveSpeed;
-        }
-        */
+        /*        public void Move(Particle p)
+                {
+                    p.A = p.A + p.Dir * serializedBodyPart.moveSpeed;
+                }
+                */
 
-/*        public EntityBodyPart(Transform parent, SerializedBodyPart bp) {
-            serializedBodyPart = bp;
+        /*        public EntityBodyPart(Transform parent, SerializedBodyPart bp) {
+                    serializedBodyPart = bp;
 
-            go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            go.transform.parent = parent;
-            go.transform.localScale = bp.scale * Vector3.one;
+                    go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    go.transform.parent = parent;
+                    go.transform.localScale = bp.scale * Vector3.one;
 
-            material = new Material(GameSettings.BillboardMaterial.shader);
-            material.CopyPropertiesFromMaterial(GameSettings.BillboardMaterial);
-            material.SetTexture("_MainTex", (Texture2D)Resources.Load("Textures/" + bp.texture));
-            go.GetComponent<Renderer>().material = material;
+                    material = new Material(GameSettings.BillboardMaterial.shader);
+                    material.CopyPropertiesFromMaterial(GameSettings.BillboardMaterial);
+                    material.SetTexture("_MainTex", (Texture2D)Resources.Load("Textures/" + bp.texture));
+                    go.GetComponent<Renderer>().material = material;
 
-            foreach (SerializedBodyPart sbp in bp.bodyParts)
-                bodyparts.Add(new EntityBodyPart(go.transform, sbp));
+                    foreach (SerializedBodyPart sbp in bp.bodyParts)
+                        bodyparts.Add(new EntityBodyPart(go.transform, sbp));
 
 
 
-        }
-        */
+                }
+                */
 
-        public void Update(Entity me, EntityCollection ec)
+
+
+        public void Update(Entity me, EntityCollection ec, float zoom, float rot)
         {
             if (serializedBodyPart.weapon != null)
                 serializedBodyPart.weapon.Update(me, ec);
@@ -121,14 +123,19 @@ namespace LemonSpawn
             }
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            if (go!=null)
-                go.transform.rotation = Quaternion.AngleAxis(angle + serializedBodyPart.rotateTexture, Vector3.forward   );
+            if (go != null)
+            {
+                go.transform.rotation = Quaternion.AngleAxis(angle + serializedBodyPart.rotateTexture + rot, Vector3.forward);
+                go.transform.localScale = serializedBodyPart.scale* Vector3.one * zoom;
+            }
 
 
 
             foreach (EntityBodyPart bp in bodyparts)
-                bp.Update(me, ec);
+                bp.Update(me, ec, 1, 0);
         }
+
+
 
         public EntityBodyPart(Transform parent, SerializedBodyPart bp, bool hasCollider)
         {
@@ -177,11 +184,14 @@ namespace LemonSpawn
         public EntityBodyPart body;
         public Particle particle = new Particle();
         public Entity currentTarget = null;
-        public bool markDie = false;
+        public bool markedForDeath = false;
+        public bool killObject = false;
         public enum Teams { Player1, Player2, AI1, AI2 };
         public Teams team = Teams.Player1;
         public Entity target = null;
 
+        private Vector3 Zoom = new Vector3(1, 10, -50);
+        private Vector3 Angle = new Vector3(0, -100*4, 500*5);
 
 
         public void Initialize(SerializedEntity se, Vector3 pos, Teams t, Vector3 dir)
@@ -216,8 +226,19 @@ namespace LemonSpawn
          
         void MarkDie()
         {
+            if (!markedForDeath && !serializedEntity.isWeapon)
+            {
+                if (serializedEntity.deathSound != "")
+                    SoundUtil.PlaySound(serializedEntity.deathSound, 1);
+                EntityCollection.explosions.Add("Explosion", particle.P, 1, particle.V, 2, 11);
+            }
 
-            markDie = true;
+            markedForDeath = true;
+
+            if (serializedEntity.isWeapon)
+            {
+                killObject = true;
+            }
         }
 
 /*        void Destroy()
@@ -233,6 +254,14 @@ namespace LemonSpawn
         public Vector3 directionTo(Entity o)
         {
             return (particle.P - o.particle.P).normalized;
+        }
+
+        public void UpdateBody(EntityCollection ec)
+        {
+            if (body != null)
+            {
+                body.Update(this,  ec, Zoom.x, Angle.x);
+            }
         }
 
 
@@ -258,10 +287,28 @@ namespace LemonSpawn
         }
 
         // Update is called once per frame
+
+        private void UpdateDeath()
+        {
+            Zoom.x = Zoom.x + Zoom.y * Time.deltaTime;
+            Zoom.y = Zoom.y + Zoom.z * Time.deltaTime;
+            Angle.x = Angle.x + Angle.y * Time.deltaTime;
+            Angle.y = Angle.y + Angle.z * Time.deltaTime;
+            if (Zoom.x < 0.2) // True death
+                killObject = true;
+
+        }
+
         void Update()
         {
-            Move();
-            ValidateExistence();
+            if (markedForDeath)
+                UpdateDeath();
+            else
+            {
+                Move();
+                ValidateExistence();
+
+            }
         }
 
         void ValidateExistence()
@@ -287,9 +334,12 @@ namespace LemonSpawn
                 return;
             // Cannot hurt own team
             if (other.team == team)
-                return; ;
-            if (serializedEntity.maxDamage <= 0)
+                return; 
+
+
+            if (other.serializedEntity.isTargetable == false)
                 return;
+
             if (distanceTo(other)<serializedEntity.detonateDistance)
             {
                 other.Hit(serializedEntity.maxDamage);

@@ -67,6 +67,9 @@ namespace LemonSpawn
         public void InsertCollection(EntityCollection ec, float gs)
         {
             gridSize = gs;
+            if (ec.entities.Count < 2)
+                return;
+
             min = new Vector2(1E20f, 1E20f);
             max = new Vector2(-1E20f, -1E20f);
             foreach (Entity e in ec.entities)
@@ -79,6 +82,10 @@ namespace LemonSpawn
 
             sizex = (int)((max.x - min.x) / gridSize);
             sizey = (int)((max.y - min.y) / gridSize);
+
+            if (sizex == 0 || sizey == 0)
+                return;
+
 
             grid = new List<Entity>[sizex, sizey];
             for (int i = 0; i < sizex; i++)
@@ -134,6 +141,8 @@ namespace LemonSpawn
         List<InstantiateQueueItem> queuedItems = new List<InstantiateQueueItem>();
         List<Entity> deathList = new List<Entity>();
 
+        public static Explosions explosions = new Explosions();
+
         public void Instantiate(string type, Vector3 pos, Entity.Teams team, Vector3 dir, float overrideMaxDistance)
         {
             queuedItems.Add(new InstantiateQueueItem(type, pos, dir, team, overrideMaxDistance));
@@ -174,7 +183,7 @@ namespace LemonSpawn
             deathList.Clear();
 
             foreach (Entity e in entities)
-                if (e.markDie)
+                if (e.killObject)
                     deathList.Add(e);
 
 
@@ -193,18 +202,24 @@ namespace LemonSpawn
 
 
 
-        public void Test()
+        public void Test(int count)
         {
             System.Random rnd = new System.Random();
-            for (int i = 0; i < 50; i++)
+            if (entities.Count<count)
+            for (int i = 0; i < 1; i++)
             {
                 float s = 20;
                 float d1 = (float)rnd.NextDouble() * s - s / 2;
                 float d2 = (float)rnd.NextDouble() * s - s / 2;
-                if ((float)rnd.NextDouble() > 0.6)
-                    Instantiate("Sopwith", new Vector3(d1, d2, 0), Entity.Teams.AI1, Vector3.zero, -1);
+
+                Entity.Teams t = Entity.Teams.AI1;
+                    if (rnd.NextDouble() > 0.5)
+                        t = Entity.Teams.AI2;                    
+
+                if ((float)rnd.NextDouble() > 0.5)
+                    Instantiate("Sopwith", new Vector3(d1, d2, 0), t, Vector3.zero, -1);
                 else
-                    Instantiate("ParaTrooper", new Vector3(d1, d2, 0), Entity.Teams.AI2, Vector3.zero, -1);
+                    Instantiate("ParaTrooper", new Vector3(d1, d2, 0), t, Vector3.zero, -1);
             }
 
         }
@@ -212,10 +227,7 @@ namespace LemonSpawn
         public void UpdateCollectionN2()
         {
             foreach (Entity a in entities)
-            {
-                if (a.body != null)
-                    a.body.Update(a, this);
-            }
+                a.UpdateBody(this);
 
         }
 
@@ -258,8 +270,8 @@ namespace LemonSpawn
             foreach (Entity a in entities)
             {
                 //Debug.Log(a.body);
-                if (a.body != null)
-                    a.body.Update(a, this);
+
+                a.UpdateBody(this);
 
                 if (a.target == null && a.serializedEntity.homing == true)
                     CoreN2(a);
@@ -277,8 +289,8 @@ namespace LemonSpawn
             float avg = 0;
             foreach (Entity a in entities)
             {
-                if (a.body != null)
-                    a.body.Update(a, this);
+                a.UpdateBody(this);
+
                 avg += CoreSphere(a);
             }
             avg /= entities.Count;
@@ -298,6 +310,7 @@ namespace LemonSpawn
         {
             MaintainPopulation();
             UpdateGrid();
+            explosions.Update();
 //            UpdateCollectionSphere();
 //            Debug.Log(entities.Count);
         }

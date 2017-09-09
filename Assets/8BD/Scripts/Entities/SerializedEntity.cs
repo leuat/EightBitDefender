@@ -14,7 +14,9 @@ namespace LemonSpawn
         public float reloadSpeed = 1;
         public bool autoShoot = true;
         public float weaponMaxDistance = -1;
+        public string sound = "";
         private float timer = 0;
+        
 
 
         public Weapon Copy()
@@ -25,6 +27,7 @@ namespace LemonSpawn
             w.autoShoot = autoShoot;
             w.weaponMaxDistance = weaponMaxDistance;
             w.timer = Random.value * reloadSpeed;
+            w.sound = sound;
             return w;
         }
         
@@ -42,7 +45,10 @@ namespace LemonSpawn
             if (timer>reloadSpeed)
             {
                 timer = 0;
-                ec.Instantiate(entityWeapon, me.particle.P, me.team, me.target.directionTo(me), weaponMaxDistance);
+                float d = me.target.distanceTo(me);
+                Vector3 tar = (me.target.directionTo(me) + me.target.particle.V*d).normalized;
+
+                ec.Instantiate(entityWeapon, me.particle.P, me.team,tar, weaponMaxDistance);
             }
         }
 
@@ -111,7 +117,8 @@ namespace LemonSpawn
         public bool autoRotate = true;
         public float maxDistance = -1; // -1 means inf
         public float health = 10;
-
+        public string deathSound = "";
+        public bool isWeapon = false;
 
         public SerializedBodyPart body;
 
@@ -130,6 +137,8 @@ namespace LemonSpawn
             c.autoRotate = autoRotate;
             c.maxDistance = maxDistance;
             c.health = health;
+            c.deathSound = deathSound;
+            c.isWeapon = isWeapon;
             c.body = body.Copy();
 
 

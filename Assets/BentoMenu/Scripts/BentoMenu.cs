@@ -18,7 +18,8 @@ namespace LemonSpawn
         public Texture2D background;
         public Vector2 spacing;
         public float hoverScale =0.18f;
-
+        public float wobbleAmplitude = 4;
+        public float wobbleSpeed = 4;
 
 
         public GUIStyle GetStyle(Color c)
@@ -47,7 +48,7 @@ namespace LemonSpawn
     public class BentoMenu : MonoBehaviour
     {
 
-        public BentoMenuItem root = new BentoMenuItem();
+        public BentoMenuItem2D root = new BentoMenuItem2D();
         public BentoLayout layout = new BentoLayout();
         public BentoRenderPacket rp = new BentoRenderPacket();
         public string menuName = "";

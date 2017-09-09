@@ -64,12 +64,12 @@ namespace LemonSpawn
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             SerializedEntities.se = SerializedEntities.DeSerialize(Constants.EntitiesXML);
-            eCollection.Test();
         }
 
         // Update is called once per frame
         void Update()
         {
+            eCollection.Test(40);
             deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
             eCollection.Update();
            

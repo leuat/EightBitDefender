@@ -6,9 +6,9 @@ using UnityEngine.Events;
 namespace LemonSpawn
 {
     [System.Serializable]
-    public class BentoMenuItem 
+    public class BentoMenuItem2D 
     {
-        public List<BentoMenuItem> children = new List<BentoMenuItem>();
+        public List<BentoMenuItem2D> children = new List<BentoMenuItem2D>();
 //        public Callback callback;
         public Texture2D image;
         public bool childrenHorizontal = false;
@@ -50,7 +50,7 @@ namespace LemonSpawn
             GUIUtility.ScaleAroundPivot(scale, pivot);
             GUIUtility.RotateAroundPivot(rotAngle, pivot);
 
-            rotAngle = Mathf.Sin(time + rotPhase)*5f;
+            rotAngle = Mathf.Sin(time + rotPhase)*rp.layout.wobbleAmplitude;
 
             if (background == null)
                 background = Util.createSolidTexture(rp.layout.backgroundColor);
@@ -98,11 +98,11 @@ namespace LemonSpawn
                 dSize = new Vector2(childrenSize.x + rp.layout.spacing.x, 0);
 
             Vector2 cpos = pos;
-            foreach (BentoMenuItem bmi in children)
+            foreach (BentoMenuItem2D bmi in children)
             {
-         //       Rect r = getRect(cpos, 1 + bmi.hover*rp.layout.hoverScale);
                 Rect r = getRect(cpos);
-                bmi.RenderAll(rp, r, Vector2.one*(1+bmi.hover * rp.layout.hoverScale), cpos.y*123.23453f, 4 + bmi.hover*1.523f);
+                float hoverScale = 1 + bmi.hover * rp.layout.hoverScale;
+                bmi.RenderAll(rp, r, Vector2.one*hoverScale, cpos.y*123.23453f, hoverScale*rp.layout.wobbleSpeed);
 
 
                 bmi.Render(rp, cpos);
