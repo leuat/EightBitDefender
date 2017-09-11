@@ -11,7 +11,7 @@ namespace LemonSpawn
 
 
         // Use this for initialization
-        EntityCollection eCollection = new EntityCollection();
+        GameLevel gl = new GameLevel();
 
         MenuItem menu = null;
         MenuLayout mLayout;
@@ -64,14 +64,15 @@ namespace LemonSpawn
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             SerializedEntities.se = SerializedEntities.DeSerialize(Constants.EntitiesXML);
+            gl.Initialize();
         }
 
         // Update is called once per frame
         void Update()
         {
-            eCollection.Test(40);
+            gl.Test(40);
             deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-            eCollection.Update();
+            gl.Update();
            
         }
     }

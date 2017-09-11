@@ -1,61 +1,59 @@
 ﻿using UnityEngine;
 
-[ExecuteInEditMode]
-[RequireComponent(typeof(Camera))]
 
-public class CRTScreen : MonoBehaviour
+namespace LemonSpawn
 {
-    public Shader shader;
-    private Material _material;
-
-    [Range(0, 1024)]
-    public float pixels = 320f;
-    [Range(-1, 1)]
-    public float radialDistort = 1.0f;
-    [Range(0, 0.5f)]
-    public float vignetteDistance = 0.2f;
-    [Range(0, 1)]
-    public float tintStrength = 0.5f;
-    [Range(0, 1)]
-    public float pixelBlend = 0.5f;
-    //    [Range(0, 1)]
-    public Color tint = Color.white;
 
 
+    [ExecuteInEditMode]
+    [RequireComponent(typeof(Camera))]
 
-
-    protected Material material
+    public class CRTScreen : MonoBehaviour
     {
-        get
+        public Shader shader;
+        private Material _material;
+
+//        public Color tint = Color.white;
+        public SerializedCRTSettings settings = new SerializedCRTSettings();
+
+
+
+        protected Material material
         {
-            if (_material == null)
+            get
             {
-                _material = new Material(shader);
-                _material.hideFlags = HideFlags.HideAndDontSave;
+                if (_material == null)
+                {
+                    _material = new Material(shader);
+                    _material.hideFlags = HideFlags.HideAndDontSave;
+                }
+                return _material;
             }
-            return _material;
         }
-    }
 
-    private void OnRenderImage(RenderTexture source, RenderTexture destination)
-    {
-        if (shader == null) return;
-        Material mat = material;
-        mat.SetFloat("_pixels", pixels);
-        mat.SetFloat("_pixelsColor", Screen.width);//  pixelsColor);
-        mat.SetFloat("_radialDistort", radialDistort);
-        mat.SetFloat("_vignetteDistance", vignetteDistance);
-        mat.SetFloat("_pixelBlend", pixelBlend);
-        mat.SetColor("_tint", tint);
-        mat.SetFloat("_tintStrength", tintStrength);
-        Graphics.Blit(source, destination, mat, 0);
-    }
-
-    void OnDisable()
-    {
-        if (_material)
+        private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
-            DestroyImmediate(_material);
+            if (shader == null) return;
+            Material mat = material;
+            mat.SetFloat("_pixels", settings.pixels);
+            mat.SetFloat("_pixelsColorX", Screen.width);//  pixelsColor);
+            mat.SetFloat("_pixelsColorY", Screen.height);//  pixelsColor);
+            mat.SetFloat("_radialDistort", settings.radialDistort);
+            mat.SetFloat("_vignetteDistance", settings.vignetteDistance);
+            mat.SetFloat("_pixelBlend", settings.pixelBlend);
+            mat.SetColor("_tint", settings.tint());
+            mat.SetFloat("_tintStrength", settings.tintStrength);
+            mat.SetFloat("_gamma", settings.gamma);
+            mat.SetFloat("_correction", settings.correction);
+            Graphics.Blit(source, destination, mat, 0);
+        }
+
+        void OnDisable()
+        {
+            if (_material)
+            {
+                DestroyImmediate(_material);
+            }
         }
     }
 }

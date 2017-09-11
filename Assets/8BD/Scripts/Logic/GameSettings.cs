@@ -16,6 +16,9 @@ namespace LemonSpawn
         public static float zHeight = 0;
         //        public static string BillboardMaterial = "Materials/Billboard";
         public static Material BillboardMaterial = (Material)Resources.Load("Materials/Billboard");
+        public static float birthMessageProbability = 0.25f;
+        public static float deathMessageProbability = 0.25f;
+
 
     }
 

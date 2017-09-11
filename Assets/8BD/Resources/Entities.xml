@@ -31,6 +31,17 @@
     <SerializedEntity>
       <typeName>Sopwith</typeName>
       <value>1</value>
+      <birthTexts>
+        <string>whoooo!</string>
+        <string>here I come!</string>
+        <string>grrrrrr</string>
+      </birthTexts>
+      <deathTexts>
+        <string>nooooo!</string>
+      </deathTexts>
+
+
+
       <body>
         <moveSpeed>2</moveSpeed>
         <minSpeed>1</minSpeed>
@@ -39,8 +50,6 @@
         <texture>entity_sopwith</texture>
         <rotateTexture>-90</rotateTexture>
         <directionFromSpeed>true</directionFromSpeed>
-
-
         <weapon>
           <entityWeapon>SmallBullet</entityWeapon>
           <reloadSpeed>0.5</reloadSpeed>
@@ -54,6 +63,14 @@
       <typeName>ParaTrooper</typeName>
       <value>1</value>
       <deathSound>explosion1</deathSound>
+      <birthTexts>
+        <string>INITIALIZING</string>
+        <string>RAIN OF DEATH</string>
+      </birthTexts>
+      <deathTexts>
+        <string>AAARGH</string>
+      </deathTexts>
+
       <body>
         <moveSpeed>0</moveSpeed>
         <directionFromSpeed>false</directionFromSpeed>

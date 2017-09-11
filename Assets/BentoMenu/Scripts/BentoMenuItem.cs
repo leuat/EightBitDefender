@@ -30,20 +30,23 @@ namespace LemonSpawn
 
         public Rect getRect(Vector2 pos)
         {
-
+            return new Rect(0, 0, 0, 0);
+            /*
             if (childrenAspectFixed)
                 return new Rect(BentoMenu.getX(pos.x - childrenSize.x / 2), BentoMenu.getY(pos.y) - BentoMenu.getX(childrenSize.y / 2),
                                 BentoMenu.getX(childrenSize.x), BentoMenu.getX(childrenSize.y));
 
             return new Rect(BentoMenu.getX(pos.x - hover * childrenSize.x / 2), BentoMenu.getY(pos.y - childrenSize.y / 2),
                             BentoMenu.getX(childrenSize.x), BentoMenu.getY(childrenSize.y));
+
+            */
         }
 
 
         private void RenderAll(BentoRenderPacket rp, Rect r, Vector2 scale, float rotPhase, float timeScale)
         {
 
-            pivot = new Vector2(r.xMin + r.width * 0.5f, r.yMin + r.height * 0.5f);
+/*            pivot = new Vector2(r.xMin + r.width * 0.5f, r.yMin + r.height * 0.5f);
             time += Time.deltaTime * timeScale;
 
             Matrix4x4 matrixBackup = GUI.matrix;
@@ -88,6 +91,7 @@ namespace LemonSpawn
                 }
             }
             GUI.matrix = matrixBackup;
+            */
         }
 
         public void Render(BentoRenderPacket rp, Vector2 pos)
@@ -102,7 +106,7 @@ namespace LemonSpawn
             {
                 Rect r = getRect(cpos);
                 float hoverScale = 1 + bmi.hover * rp.layout.hoverScale;
-                bmi.RenderAll(rp, r, Vector2.one*hoverScale, cpos.y*123.23453f, hoverScale*rp.layout.wobbleSpeed);
+//                bmi.RenderAll(rp, r, Vector2.one*hoverScale, cpos.y*123.23453f, hoverScale*rp.layout.wobbleSpeed);
 
 
                 bmi.Render(rp, cpos);

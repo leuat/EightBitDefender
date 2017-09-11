@@ -167,25 +167,6 @@ namespace LemonSpawn
 
 
     }
-    /*
-    * General utilities
-    *
-    */
-
-    public class Message
-    {
-        public string message;
-        public float time = 100;
-        public Message(string s)
-        {
-            message = s;
-        }
-        public Message(string s, float t)
-        {
-            message = s;
-            time = t * 3;
-        }
-    }
 
 
     class LSprite
@@ -317,6 +298,18 @@ namespace LemonSpawn
 				}
 #endif
 
+
+        public static T DeepClone<T>(T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
+        }
 
         public static float PerlinModes(Vector3 p, float s, int modes)
         {

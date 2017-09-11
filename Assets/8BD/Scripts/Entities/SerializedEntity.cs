@@ -120,6 +120,11 @@ namespace LemonSpawn
         public string deathSound = "";
         public bool isWeapon = false;
 
+        public List<string> deathTexts = new List<string>();
+        public List<string> birthTexts = new List<string>();
+
+
+
         public SerializedBodyPart body;
 
         public SerializedEntity Copy()
@@ -139,6 +144,9 @@ namespace LemonSpawn
             c.health = health;
             c.deathSound = deathSound;
             c.isWeapon = isWeapon;
+            c.deathTexts = deathTexts;
+            c.birthTexts = birthTexts;
+//            Debug.Log(c.typeName + " " + birthTexts.Count);
             c.body = body.Copy();
 
 

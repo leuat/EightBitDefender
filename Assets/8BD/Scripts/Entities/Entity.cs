@@ -202,6 +202,7 @@ namespace LemonSpawn
             particle.P = pos;
             particle.V = dir;
 
+
         }
 
         public void InitializePrefab(SerializedEntity se, Vector3 pos, Teams t, Vector3 dir)
@@ -213,6 +214,9 @@ namespace LemonSpawn
             team = t;
             particle.P = pos;
             particle.V = dir;
+
+            if (Random.value < GameSettings.birthMessageProbability && serializedEntity.birthTexts.Count > 0)
+                GameLevel.messages.Add(serializedEntity.birthTexts[Random.Range(0, serializedEntity.birthTexts.Count)], Messages.MessageType.Good, pos);
 
         }
 
@@ -230,7 +234,12 @@ namespace LemonSpawn
             {
                 if (serializedEntity.deathSound != "")
                     SoundUtil.PlaySound(serializedEntity.deathSound, 1);
-                EntityCollection.explosions.Add("Explosion", particle.P, 1, particle.V, 2, 11);
+                GameLevel.explosions.Add("Explosion", particle.P + new Vector3(0,0,-0.1f), 1, particle.V, 2, 11);
+
+                if (Random.value < GameSettings.deathMessageProbability && serializedEntity.deathTexts.Count>0)
+                    GameLevel.messages.Add(serializedEntity.deathTexts[Random.Range(0, serializedEntity.deathTexts.Count)], Messages.MessageType.Bad, particle.P);
+
+
             }
 
             markedForDeath = true;
@@ -294,8 +303,12 @@ namespace LemonSpawn
             Zoom.y = Zoom.y + Zoom.z * Time.deltaTime;
             Angle.x = Angle.x + Angle.y * Time.deltaTime;
             Angle.y = Angle.y + Angle.z * Time.deltaTime;
-            if (Zoom.x < 0.2) // True death
+            if (Zoom.x < 0.2)
+            { // True death
                 killObject = true;
+                GameLevel.messages.Add("$" + serializedEntity.value, Messages.MessageType.Neutral, particle.P);
+
+            }
 
         }
 

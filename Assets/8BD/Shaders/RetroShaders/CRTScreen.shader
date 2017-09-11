@@ -44,8 +44,9 @@
 			float _tintStrength;
 			float4 _tint;
 			float _pixelBlend;
-			float _pixelsColor;
-
+			float _pixelsColorX, _pixelsColorY;
+			float _gamma;
+			float _correction;
 
 
 			float3 Tint(float3 c) {
@@ -58,30 +59,37 @@
 				
 			}
 
+			float3 Gamma(float3 c) {
+				c.x = pow(c.x + _correction, _gamma);
+				c.y = pow(c.y + _correction, _gamma);
+				c.z = pow(c.z + _correction, _gamma);
+				return c;
+			}
+
+
 			float2 pixelize(float2 uv) {
 				uv.x = ((int)(uv.x*_pixels)) / _pixels;
 				uv.y = ((int)(uv.y*_pixels)) / _pixels;
 				return uv;
 			}
 			float3 pixelsColor(float2 uv, float3 color) {
-				int x = ((uv.x*_pixelsColor));
-				int y = ((uv.y*_pixelsColor));
-				float3 retCol = float3(0, 0, 0);
+				int x = ((uv.x*_pixelsColorX));
+				int y = ((uv.y*_pixelsColorY));
+				float3 retCol =  float3(0, 0, 0);
 
-				float i = 0.4*(color.r + color.g + color.b);
-
+				float s = 2;
 
 				if (y % 2 == 0) {
 					if (x % 2 == 0)
-						retCol.r = i;
+						retCol.r = color.r*s;
 					if (x % 2 == 1)
-						retCol.g = i;
+						retCol.g = color.g*s;
 				}
 				else
 				{
 					
 					if (x % 2 == 0)
-						retCol = float3(0, 0, i);
+						retCol = float3(0, 0, color.b*s);
 					else retCol = color;
 
 				}
@@ -111,12 +119,12 @@
 				float vignette;
 				uv = radialDistort(uv, _radialDistort*10, vignette);
 				fixed4 col = tex2D(_MainTex, uv);
-				col.xyz = _pixelBlend*col.xyz + (1-_pixelBlend)*pixelsColor(i.uv, col.xyz);
+				col.xyz = _pixelBlend*col.xyz + (1-_pixelBlend)*pixelsColor(i.uv, col.xyz)*1;
 				col.xyz *= vignette;
 			
 				// just invert the colors
 //				col = 1 - col;
-				col.xyz = Tint(col.xyz);
+				col.xyz = Gamma(Tint(col.xyz));
 				return col;
 			}
 			ENDCG

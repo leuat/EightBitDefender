@@ -6,17 +6,14 @@ using UnityEngine;
 namespace LemonSpawn
 {
 
-    public class Explosion
+    public class Explosion : GenericObject
     {
-        private GameObject go;
         private SpriteRenderer spriteRenderer;
         private Sprite[] sprites;
         private string baseName;
-        private Vector3 pos;
         float time = 0;
         float timeScale = 1;
         Vector3 V;
-        public bool markForDeath = false;
         int maxFrames;
 
         public Explosion(string n, Vector3 p, float ts, Vector3 v, float scale, int max)
@@ -34,18 +31,11 @@ namespace LemonSpawn
 
         }
 
-        public void Die()
+        override public void Update() 
         {
-            markForDeath = true;
-        }
-
-        public void Update()
-        {
+            base.Update();
             if (sprites == null)
                 sprites = Sprites.GetASprite(baseName);
-
-            Debug.Log(sprites);
-
 
             time += Time.deltaTime*timeScale;
             if (time > 1)
@@ -63,28 +53,12 @@ namespace LemonSpawn
     }
 
 
-    public class Explosions
+    public class Explosions : GenericCollection
     {
-        List<Explosion> explosions = new List<Explosion>();
-
+  
         public void Add(string n, Vector3 p, float ts, Vector3 v, float scale, int max)
         {
-            explosions.Add(new LemonSpawn.Explosion(n, p, ts, v, scale, max));
-        }
-
-        public void Update()
-        {
-            List<Explosion> deathList = new List<Explosion>();
-            foreach (Explosion e in explosions)
-                if (e.markForDeath)
-                    deathList.Add(e);
-
-            foreach (Explosion e in deathList)
-                explosions.Remove(e);
-
-            foreach (Explosion e in explosions)
-                e.Update();
-
+            collection.Add(new LemonSpawn.Explosion(n, p, ts, v, scale, max));
         }
 
 

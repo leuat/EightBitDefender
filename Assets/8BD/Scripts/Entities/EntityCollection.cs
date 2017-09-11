@@ -141,7 +141,6 @@ namespace LemonSpawn
         List<InstantiateQueueItem> queuedItems = new List<InstantiateQueueItem>();
         List<Entity> deathList = new List<Entity>();
 
-        public static Explosions explosions = new Explosions();
 
         public void Instantiate(string type, Vector3 pos, Entity.Teams team, Vector3 dir, float overrideMaxDistance)
         {
@@ -202,27 +201,6 @@ namespace LemonSpawn
 
 
 
-        public void Test(int count)
-        {
-            System.Random rnd = new System.Random();
-            if (entities.Count<count)
-            for (int i = 0; i < 1; i++)
-            {
-                float s = 20;
-                float d1 = (float)rnd.NextDouble() * s - s / 2;
-                float d2 = (float)rnd.NextDouble() * s - s / 2;
-
-                Entity.Teams t = Entity.Teams.AI1;
-                    if (rnd.NextDouble() > 0.5)
-                        t = Entity.Teams.AI2;                    
-
-                if ((float)rnd.NextDouble() > 0.5)
-                    Instantiate("Sopwith", new Vector3(d1, d2, 0), t, Vector3.zero, -1);
-                else
-                    Instantiate("ParaTrooper", new Vector3(d1, d2, 0), t, Vector3.zero, -1);
-            }
-
-        }
 
         public void UpdateCollectionN2()
         {
@@ -310,7 +288,6 @@ namespace LemonSpawn
         {
             MaintainPopulation();
             UpdateGrid();
-            explosions.Update();
 //            UpdateCollectionSphere();
 //            Debug.Log(entities.Count);
         }
