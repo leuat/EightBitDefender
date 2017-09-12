@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 namespace LemonSpawn
 {
@@ -13,17 +13,11 @@ namespace LemonSpawn
         // Use this for initialization
         GameLevel gl = new GameLevel();
 
-        MenuItem menu = null;
-        MenuLayout mLayout;
-
-        float deltaTime = 0.0f;
-
-
-        public void LoadGame(System.Object o)
+        public void LoadGame()
         {
-            string name = (string)o;
-            Debug.Log(name);
-
+            //            Application.LoadLevel(1);
+            GameLevel.DestroyAll();
+            SceneManager.LoadScene(1);
         }
 
 
@@ -34,36 +28,35 @@ namespace LemonSpawn
 
         public void InvokeMenu()
         {
-            if (BentoMenu.currentMessage == "quit")
+            if (BentoMenu.currentMessage.Length == 0)
+                return;
+
+            if (BentoMenu.currentMessage[1] == "quit")
                 Quit();
-            if (BentoMenu.currentMessage == "start")
-                Debug.Log("Start");
+            if (BentoMenu.currentMessage[1] == "start")
+                LoadGame();
+            if (BentoMenu.currentMessage[1] == "setLanguage")
+            {
+                GameSettings.language = int.Parse(BentoMenu.currentMessage[2]);
+            }
+                
+
+
         }
 
 
         void OnGUI()
         {
+            Util.RenderFPS();
 
-//            menu.Render(new Vector2(0.5f*Screen.width, 0.1f*Screen.height));
-
-            int w = Screen.width, h = Screen.height;
-
-            GUIStyle style = new GUIStyle();
-
-            Rect rect = new Rect(0, 0, w, h * 2 / 100);
-            style.alignment = TextAnchor.UpperLeft;
-            style.fontSize = h * 4 / 100;
-            style.normal.textColor = Color.white;
-            float msec = deltaTime * 1000.0f;
-            float fps = 1.0f / deltaTime;
-            string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
-            GUI.Label(new Rect(10,10,100,100), text, style);
         }
 
         void Start()
         {
+//            Color c = ColorUtility.TryParseHtmlString
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             SerializedEntities.se = SerializedEntities.DeSerialize(Constants.EntitiesXML);
+            SerializedScenes.szScenes = SerializedScenes.DeSerialize(Constants.ScenesXML);
             gl.Initialize();
         }
 
@@ -71,7 +64,6 @@ namespace LemonSpawn
         void Update()
         {
             gl.Test(40);
-            deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
             gl.Update();
            
         }

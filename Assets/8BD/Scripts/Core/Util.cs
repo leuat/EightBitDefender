@@ -311,6 +311,29 @@ namespace LemonSpawn
             }
         }
 
+        static float deltaTime = 0.0f;
+
+        public static void RenderFPS()
+        {
+            int w = Screen.width, h = Screen.height;
+
+            GUIStyle style = new GUIStyle();
+
+            Rect rect = new Rect(0, 0, w, h * 2 / 100);
+            style.alignment = TextAnchor.UpperLeft;
+            style.fontSize = h * 4 / 100;
+            style.normal.textColor = Color.white;
+            float msec = deltaTime * 1000.0f;
+            float fps = 1.0f / deltaTime;
+            string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+            GUI.Label(new Rect(10, 10, 100, 100), text, style);
+
+            Util.deltaTime += (Time.deltaTime - Util.deltaTime) * 0.1f;
+
+
+        }
+
+
         public static float PerlinModes(Vector3 p, float s, int modes)
         {
             return noise4D.octave_noise_4d(modes, 1, s, p.x, p.y, p.z, 0.23125f, false);

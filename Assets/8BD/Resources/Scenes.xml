@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SerializedScenes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <characters>
+    <SerializedCharacter>
+      <texture>Princess_c64</texture>
+      <character_id>princess_64</character_id>
+      <name>
+          <text>
+            <string>Princess 64</string>
+            <string>Prinsesse 64</string>
+            <string>64ひめ</string>
+          </text>
+      </name>
+      <font>koharufont</font>
+      <fcolor>#0088FF</fcolor>
+      <bcolor>#0000AA</bcolor>
+    </SerializedCharacter>
+    
+    <SerializedCharacter>
+      <texture>Atari</texture>
+      <character_id>atari</character_id>
+      <name>
+          <text>
+            <string>Mother Atari</string>
+            <string>Mammatari</string>
+            <string>ままたり</string>
+          </text>
+      </name>
+      <font>koharufont</font>
+      <fcolor>#EEEE77</fcolor>
+      <bcolor>#00CC55</bcolor>
+    </SerializedCharacter>
+
+  </characters>
+  
+  <scenes>
+    <SerializedScene>
+      <scene_id>testscene</scene_id>
+      <music>Happy</music>
+      <char1_id>princess_64</char1_id>
+      <char2_id>atari</char2_id>
+      <background>Landscape1</background>
+      <CRTSettings_id>crt</CRTSettings_id>
+      <texts>
+        <CharacterText>
+          <character_id>princess_64</character_id>
+          <text>
+            <text>
+              <string>OOOh! How are things?</string>
+              <string>Hallaballa! Åssen går deT?</string>
+              <string>こんいちは</string>
+            </text>
+          </text>
+        </CharacterText>
+        <CharacterText>
+          <character_id>atari</character_id>
+          <text>
+            <text>
+              <string>Well you know...</string>
+              <string>Tja du veit...</string>
+              <string>えええと。。。</string>
+            </text>
+          </text>
+        </CharacterText>
+        <CharacterText>
+          <character_id>princess_64</character_id>
+          <text>
+            <text>
+              <string>Bad day at work?</string>
+              <string>Dårlig dag på jobb?</string>
+              <string>おしごとは たいへんかな</string>
+            </text>
+          </text>
+        </CharacterText>
+      </texts>
+      
+      
+    </SerializedScene>
+  </scenes>
+
+  <CRTSettings>
+    <SerializedCRTSettings>
+      <settings_id>ibm_yellow</settings_id>
+      <pixels>320</pixels>
+      <radialDistort>1</radialDistort>
+      <vignetteDistance>0.3</vignetteDistance>
+      <tintStrength>0.9</tintStrength>
+      <pixelBlend>0.2</pixelBlend>
+      <gamma>1</gamma>
+      <correction>0</correction>
+      <tint_r>1</tint_r>
+      <tint_g>0.9</tint_g>
+      <tint_b>0.3</tint_b>
+    </SerializedCRTSettings>
+    <SerializedCRTSettings>
+      <settings_id>crt</settings_id>
+      <pixels>320</pixels>
+      <radialDistort>1</radialDistort>
+      <vignetteDistance>0.3</vignetteDistance>
+      <tintStrength>0.0</tintStrength>
+      <pixelBlend>0.2</pixelBlend>
+      <gamma>1</gamma>
+      <correction>0</correction>
+      <tint_r>1</tint_r>
+      <tint_g>0.9</tint_g>
+      <tint_b>0.3</tint_b>
+    </SerializedCRTSettings>
+  </CRTSettings>
+
+</SerializedScenes>

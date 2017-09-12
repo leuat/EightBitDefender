@@ -52,7 +52,7 @@ namespace LemonSpawn
     {
         public List<BentoSingleMenu> bentoMenus = new List<BentoSingleMenu>();
         BentoSingleMenu activeMenu = null;
-        public static string currentMessage = "";
+        public static string[] currentMessage = null;
         public static int autoLoadMenu = -1;
         public BentoLayout layout = new BentoLayout();
 
@@ -64,6 +64,10 @@ namespace LemonSpawn
                 activeMenu = bentoMenus[0];
 
         }
+
+        
+
+
         void Update()
         {
             foreach (BentoSingleMenu bm in bentoMenus)
@@ -72,6 +76,13 @@ namespace LemonSpawn
                     bm.Update(true);
 
                 else bm.Update(false);
+            }
+            if (activeMenu != null)
+            {
+                Vector3 p = transform.position;
+                float t = 0.96f;
+                p.z = p.z * t + (1 - t) * activeMenu.zHeight;
+                transform.position = p;
             }
             if (autoLoadMenu!=-1)
             {
@@ -92,6 +103,7 @@ namespace LemonSpawn
         public Vector2 position;
         public Vector3 size;
         public UnityEvent callbackEvent;
+        public float zHeight = -12;
         private Camera camera;
 
 
@@ -120,13 +132,14 @@ namespace LemonSpawn
             {
                 RaycastHit hit;
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit, 1000.0f,11))
+                if (Physics.Raycast(ray, out hit, 1000.0f))
                 {
                     //StartCoroutine(ScaleMe(hit.transform));
 //                    Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
                     if (hit.transform.name.Contains("command"))
                     {
-                        BentoMenu.currentMessage = hit.transform.name.Split(' ')[1];
+                        BentoMenu.currentMessage = hit.transform.name.Split(' ');
+                        
                         callbackEvent.Invoke();
                         foreach (BentoMenuItem3D bmi in items)
 

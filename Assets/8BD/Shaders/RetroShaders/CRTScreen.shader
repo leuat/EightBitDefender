@@ -72,9 +72,11 @@
 				uv.y = ((int)(uv.y*_pixels)) / _pixels;
 				return uv;
 			}
-			float3 pixelsColor(float2 uv, float3 color) {
-				int x = ((uv.x*_pixelsColorX));
-				int y = ((uv.y*_pixelsColorY));
+			float3 pixelsColor(float2 uv, float3 color) 
+			{
+				float ss = 1;// 0.25;// 0.25;// 0.25;
+				int x = ((int)(uv.x*_pixelsColorX*ss));
+				int y = ((int)(uv.y*_pixelsColorY*ss));
 				float3 retCol =  float3(0, 0, 0);
 
 				float s = 2;
@@ -93,16 +95,17 @@
 					else retCol = color;
 
 				}
-					
+				retCol *= 1;
+
 				return retCol;
 			}
 
 			float2 radialDistort(float2 uv, float strength, out float vignette) {
 				float2 dir = (float2(0.5, 0.5) - uv);
-				float dist = clamp(length(dir)-0.2,0,1);
+				float dist = clamp(length(dir)*1.0-0.35,0,1.0);
 				float distKeep = dist;
 				dir = normalize(dir);
-				dist = pow(dist, 6);
+				dist = pow(dist, 4);
 				uv -= dir*dist*strength;
 
 				vignette = clamp(clamp(1.0-distKeep*distKeep*_vignetteDistance*10,0,1),0,1);

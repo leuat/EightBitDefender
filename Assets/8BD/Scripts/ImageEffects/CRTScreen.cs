@@ -12,8 +12,8 @@ namespace LemonSpawn
     {
         public Shader shader;
         private Material _material;
-
-//        public Color tint = Color.white;
+        private int pixelWidth = -1;
+        //        public Color tint = Color.white;
         public SerializedCRTSettings settings = new SerializedCRTSettings();
 
 
@@ -31,13 +31,36 @@ namespace LemonSpawn
             }
         }
 
+        private int FindPixelWidth()
+        {
+            if (Screen.width < 1024)
+                return 1;
+            if (Screen.width < 1600)
+                return 2;
+            if (Screen.width < 2048)
+                return 4;
+            if (Screen.width < 3000)
+                return 8;
+            if (Screen.width < 5000)
+                return 16;
+
+            return 1;
+
+         }
+
+
+
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
             if (shader == null) return;
+            if (pixelWidth == -1)
+                pixelWidth = FindPixelWidth();
+
+
             Material mat = material;
             mat.SetFloat("_pixels", settings.pixels);
-            mat.SetFloat("_pixelsColorX", Screen.width);//  pixelsColor);
-            mat.SetFloat("_pixelsColorY", Screen.height);//  pixelsColor);
+            mat.SetFloat("_pixelsColorX", Screen.width / pixelWidth);//  pixelsColor);
+            mat.SetFloat("_pixelsColorY", Screen.height / pixelWidth);//  pixelsColor);
             mat.SetFloat("_radialDistort", settings.radialDistort);
             mat.SetFloat("_vignetteDistance", settings.vignetteDistance);
             mat.SetFloat("_pixelBlend", settings.pixelBlend);

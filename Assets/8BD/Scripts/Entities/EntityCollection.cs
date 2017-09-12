@@ -176,6 +176,15 @@ namespace LemonSpawn
 
         }
 
+        public void DestroyAll()
+        {
+            foreach (Entity e in entities)
+                GameObject.Destroy(e.gameObject);
+
+            entities.Clear();
+        }
+
+
         public void MaintainPopulation()
         {
             // First kill off

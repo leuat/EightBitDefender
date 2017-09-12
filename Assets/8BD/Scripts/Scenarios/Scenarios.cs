@@ -29,6 +29,8 @@ namespace LemonSpawn
         public float tint_g;
         [Range(0, 1)]
         public float tint_b;
+        public string settings_id;
+
 
         public Color tint()
         {
@@ -38,13 +40,17 @@ namespace LemonSpawn
         //    [Range(0, 1)]
     }
 
-    [ System.Serializable ]
+    [System.Serializable]
     public class MonsterScenario
     {
         public string monster;
         public bool capturable = false;
+        // What level to capture monster
         public int captureLevel = 10;
+        // Start base
         public int baseWaveCount = 2;
+
+        // Per level
         public int baseWaveIncrease = 2;
         public float levelScale = 1.2f;
 
@@ -56,28 +62,26 @@ namespace LemonSpawn
     {
         public string name;
         public string introTexture;
-        public SerializedCRTSettings CRTSettings;
+        public string crtSettings_id;
         public List<string> backgrounds = new List<string>();
         public List<MonsterScenario> monsters = new List<MonsterScenario>();
+        public string centerImage;
         public string music;
 
+    }
 
-
+    [System.Serializable]
+    public class Scenarios {
 
     }
 
 
-    public class Scenario
+/*    public class Scenario
     {
-        
-
+        public SerializedScenario serializedScenario;        
+        public 
 
     }
-
-
-
-    public class Scenarios 
-    {
-    }
+    */
 
 }

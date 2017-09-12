@@ -7,9 +7,9 @@
 		SubShader{
 		Pass{
 		Blend srcalpha oneminussrcalpha
-		//cull off
-		Zwrite off
-		Ztest off
+		cull back
+		Zwrite on
+		Ztest on
 
 		CGPROGRAM
 

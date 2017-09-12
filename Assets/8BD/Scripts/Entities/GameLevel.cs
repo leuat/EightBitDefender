@@ -8,11 +8,18 @@ namespace LemonSpawn
 
     public class GameLevel
     {
-        public Scenario scenario = new Scenario();
+//        public Scenario scenario = new Scenario();
 
         public static EntityCollection entities = new EntityCollection();
         public static Explosions explosions = new Explosions();
         public static Messages messages = new Messages();
+
+        public static void DestroyAll()
+        {
+            entities.DestroyAll();
+            messages.DestroyAll();
+            explosions.DestroyAll();
+        }
 
 
         public GameLevel()
@@ -21,7 +28,7 @@ namespace LemonSpawn
 
         public void Initialize()
         {
-            messages.Initialize((Font)Resources.Load("Fonts/ModerDos"), GameObject.Find("Canvas"), 20f / Screen.height * 400f, GameObject.Find("Main Camera").GetComponent<Camera>());
+            messages.Initialize((Font)Resources.Load("Fonts/ModerDos"), GameObject.Find("Canvas"), 18, GameObject.Find("Main Camera").GetComponent<Camera>());
 
         }
 
