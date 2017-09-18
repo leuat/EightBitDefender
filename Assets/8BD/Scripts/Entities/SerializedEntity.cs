@@ -7,6 +7,79 @@ using UnityEngine;
 namespace LemonSpawn
 {
 
+
+    [System.Serializable]
+    public class MapCategory
+    {
+        public string name;
+        public int id;
+        public string description;
+        public string texture;
+        public int noFrames;
+        public bool foreground = false;
+        public bool collision = false;
+        public float animSpeed = 1;
+        public Sprite[] sprites;
+
+
+        public void Initialize()
+        {
+            //            if (noFrames)
+            if (noFrames == 1)
+            {
+                sprites = new Sprite[noFrames];
+                sprites[0] = Sprites.Get(texture);
+                if (sprites[0] == null)
+                    Debug.Log("COULD not find sprite: " + texture);
+
+            }
+            else
+                sprites = Sprites.GetASprite(texture);
+                if (sprites==null)
+                if (sprites[0] == null)
+                    Debug.Log("COULD not find sprite (stack) : " + texture);
+
+
+        }
+
+    }
+
+
+    [System.Serializable]
+    public class SerializedMapCategories
+    {
+        public List<MapCategory> categories = new List<MapCategory>();
+        public static SerializedMapCategories mapCategories;// = new SerializedMapCategories();
+
+
+        public MapCategory get(int id)
+        {
+            foreach (MapCategory mc in categories)
+                if (mc.id == id)
+                    return mc;
+            return null;
+        }
+
+        public static SerializedMapCategories DeSerialize(string filename)
+        {
+            XmlSerializer deserializer = new XmlSerializer(typeof(SerializedMapCategories));
+
+            TextAsset textAsset = (TextAsset)Resources.Load(filename);
+            TextReader textReader = new StringReader(textAsset.text);
+            SerializedMapCategories sz = (SerializedMapCategories)deserializer.Deserialize(textReader);
+            textReader.Close();
+
+            foreach (MapCategory mc in sz.categories)
+                mc.Initialize();
+
+            return sz;
+        }
+
+    }
+
+
+
+
     [System.Serializable]
     public class Weapon
     {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SerializedMapCategories xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <categories>
+
+    <MapCategory>
+      <id>1</id>
+      <name>grass1</name>
+      <description>Grass 1</description>
+      <texture>Tiles/grass_test1</texture>
+      <noFrames>1</noFrames>
+      <animSpeed>0</animSpeed>
+    </MapCategory>
+    <MapCategory>
+      <id>2</id>
+      <name>stones1</name>
+      <description>Stones 1</description>
+      <texture>Tiles/stone_test1</texture>
+      <noFrames>1</noFrames>
+      <animSpeed>0</animSpeed>
+    </MapCategory>
+  
+  <MapCategory>
+    <id>3</id>
+    <name>Tree1</name>
+    <description>Tree 1</description>
+    <texture>Tiles/tree_test1</texture>
+    <noFrames>1</noFrames>
+    <foreground>true</foreground>
+    <collosion>true</collosion>
+    <animSpeed>0</animSpeed>
+  </MapCategory>
+  
+  </categories>
+
+</SerializedMapCategories>

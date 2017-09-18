@@ -53,10 +53,8 @@ namespace LemonSpawn
 
         void Start()
         {
-//            Color c = ColorUtility.TryParseHtmlString
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
-            SerializedEntities.se = SerializedEntities.DeSerialize(Constants.EntitiesXML);
-            SerializedScenes.szScenes = SerializedScenes.DeSerialize(Constants.ScenesXML);
+            //            Color c = ColorUtility.TryParseHtmlString
+            Game.game.Initialize();
             gl.Initialize();
         }
 

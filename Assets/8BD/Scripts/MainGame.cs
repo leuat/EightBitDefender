@@ -11,6 +11,8 @@ namespace LemonSpawn
 
         GameLevel gl = new GameLevel();
         Dialogue dialogue = null;
+        int currentDialogue = 0;
+        string[] dialogues = new string[] { "testscene", "testscene2" };
 
         public void Quit()
         {
@@ -45,7 +47,6 @@ namespace LemonSpawn
             }
             gl.Initialize();
 
-            dialogue = new Dialogue("testscene", GameObject.Find("EffectsCamera").GetComponent<CRTScreen>(), GetComponent<Camera>());
 
         }
 
@@ -55,6 +56,10 @@ namespace LemonSpawn
             //gl.Test(40);
             gl.Update();
 
+            if (dialogue == null && currentDialogue < dialogues.Length)
+                dialogue = new Dialogue(dialogues[currentDialogue], GameObject.Find("EffectsCamera").GetComponent<CRTScreen>(), GetComponent<Camera>());
+
+
             if (dialogue != null)
             {
                 dialogue.Update();
@@ -62,6 +67,7 @@ namespace LemonSpawn
                 {
                     dialogue = null;
                     GameSettings.state = GameSettings.GameState.Game;
+                    currentDialogue++;
                 }
 
             }

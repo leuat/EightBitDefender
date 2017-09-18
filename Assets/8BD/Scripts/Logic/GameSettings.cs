@@ -9,7 +9,8 @@ namespace LemonSpawn
     {
         public static string EntitiesXML = "Entities";
         public static string ScenesXML = "Scenes";
-        
+        public static string CategoriesXML = "MapCategories";
+
     }
 
 

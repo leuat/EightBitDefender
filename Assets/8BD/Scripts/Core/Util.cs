@@ -194,6 +194,8 @@ namespace LemonSpawn
             LSprite ls = new LSprite();
             ls.name = name;
             Texture2D t = (Texture2D)Resources.Load("Textures/" + name);
+            if (t == null)
+                UnityEngine.Debug.Log("Error could not load sprite : " + name);
             ls.sprite = Sprite.Create(t,
                 new Rect(0, 0, t.width, t.height), new Vector2(0.5f, 0.5f));
 

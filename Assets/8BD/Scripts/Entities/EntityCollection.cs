@@ -178,6 +178,7 @@ namespace LemonSpawn
 
         public void DestroyAll()
         {
+            queuedItems.Clear();
             foreach (Entity e in entities)
                 GameObject.Destroy(e.gameObject);
 

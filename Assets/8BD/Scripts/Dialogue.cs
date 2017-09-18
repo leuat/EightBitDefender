@@ -10,6 +10,8 @@ namespace LemonSpawn
     {
         public GameObject go;
         public Vector3 targetPosition = Vector3.zero;
+        public float rotAmp = 0;
+        public SerializedCharacter character;
 
         public float distanceFromTarget()
         {
@@ -20,6 +22,7 @@ namespace LemonSpawn
         {
             targetPosition = tp;
             go = CreateBox(ip, size, mat, "Textures/Characters/" + ch.texture, Dialogue.getColor(ch.bcolor));
+            character = ch;
 
         }
 
@@ -42,7 +45,9 @@ namespace LemonSpawn
         {
             float t = 0.9f;
             go.transform.position = t * go.transform.position + (1 - t) * targetPosition;
-
+            if (rotAmp>0)
+            go.transform.rotation = Quaternion.Euler(0, 0, 180 + rotAmp*Mathf.PerlinNoise(Time.time*12f,0.5245f));
+            rotAmp *= 0.9f;
 
         }
 
@@ -95,6 +100,8 @@ namespace LemonSpawn
         DisplayChar dchar1, dchar2;
         private bool advance = false;
         private List<GameObject> gos = new List<GameObject>();
+
+
 
 
 
@@ -218,7 +225,7 @@ namespace LemonSpawn
             float w = 0;
             float z = 1;
             float k = 1.3f;
-            gos.Add(DisplayChar.CreateBox(new Vector3(0, 0, 9.5f), new Vector3(40, 30, w), GameSettings.BillboardMaterial,"Textures/Background/" + scene.background, Color.white));
+            gos.Add(DisplayChar.CreateBox(new Vector3(0, 0, 10.5f), new Vector3(40, 30, w), GameSettings.BillboardMaterial,"Textures/Background/" + scene.background, Color.white));
             dchar1 = new DisplayChar(new Vector3(dx * 100, y, z), new Vector3(dx, y, z), new Vector3(7 * k, 5 * k, w), GameSettings.BillboardMaterial, char1);
             dchar2 = new DisplayChar(new Vector3(-dx * 100, y, z), new Vector3(-dx, y, z), new Vector3(7 * k, 5 * k, w), GameSettings.BillboardMaterial,  char2);
 
@@ -247,7 +254,7 @@ namespace LemonSpawn
 
         }
 
-
+        int currentSentenceWrap = 0;
 
         public void Update()
         {
@@ -257,6 +264,16 @@ namespace LemonSpawn
                 dBubble.Update();
             if (textGO != null)
                 textGO.Update();
+
+
+            if (isWriting)
+            {
+                if (currentChar == dchar1.character)
+                    dchar1.rotAmp = 10;
+                else
+                    dchar2.rotAmp = 10;
+            }
+
 
 
             if (Input.GetMouseButtonUp(0))
@@ -270,10 +287,12 @@ namespace LemonSpawn
                 currentChar = SerializedScenes.szScenes.getCharacter(scene.texts[currentDialogue].character_id);
                 CreateDialogueBubble(currentChar, currentChar.name.get() + ": ");
                 currentTextCounter = 0;
+                currentSentenceWrap = 0;
                 currentTime = 0;
             }
             else
             {
+                isWriting = false;
                 currentTime += Time.deltaTime;
                 if (currentTime > maxTime)
                 {
@@ -281,8 +300,19 @@ namespace LemonSpawn
                     string s = scene.texts[currentDialogue].text.get();
                     if (currentTextCounter < s.Length)
                     {
-                        textMesh.text += s[currentTextCounter];
+                        char c = s[currentTextCounter];
+                        if ((c==' ') && currentSentenceWrap>26)
+                        {
+                            currentSentenceWrap = 0;
+                            textMesh.text += '\n';
+                            
+                        }
+                        else
+                            textMesh.text += s[currentTextCounter];
+
+                        isWriting = true;
                         currentTextCounter++;
+                        currentSentenceWrap++;
                     }
                     else
                     {
@@ -308,6 +338,7 @@ namespace LemonSpawn
 
         bool initializeFinish = false;
         public bool isDone = false;
+        public bool isWriting = false;
         void Finish()
         {
             if (!initializeFinish)

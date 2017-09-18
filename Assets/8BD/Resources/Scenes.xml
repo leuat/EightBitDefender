@@ -30,6 +30,21 @@
       <fcolor>#EEEE77</fcolor>
       <bcolor>#00CC55</bcolor>
     </SerializedCharacter>
+    
+    <SerializedCharacter>
+      <texture>286_masked</texture>
+      <character_id>286_masked</character_id>
+      <name>
+        <text>
+          <string>Helper</string>
+          <string>Samaritan</string>
+          <string>しゅらないかた</string>
+        </text>
+      </name>
+      <font>koharufont</font>
+      <fcolor>#FF7777</fcolor>
+      <bcolor>#CC44CC</bcolor>
+    </SerializedCharacter>
 
   </characters>
   
@@ -76,6 +91,53 @@
       
       
     </SerializedScene>
+
+
+    <SerializedScene>
+      <scene_id>testscene2</scene_id>
+      <music>MainMenu</music>
+      <char1_id>princess_64</char1_id>
+      <char2_id>286_masked</char2_id>
+      <background>field_landscape</background>
+      <CRTSettings_id>crt</CRTSettings_id>
+      <texts>
+        <CharacterText>
+          <character_id>286_masked</character_id>
+          <text>
+            <text>
+              <string>Be not afraid! I am a friend...</string>
+              <string>Tja du veit...</string>
+              <string>えええと。。。</string>
+            </text>
+          </text>
+        </CharacterText>
+        <CharacterText>
+          <character_id>princess_64</character_id>
+          <text>
+            <text>
+              <string>Oh my dear I am sorry but you startled me.. </string>
+              <string>Dårlig dag på jobb?</string>
+              <string>おしごとは たいへんかな</string>
+            </text>
+          </text>
+        </CharacterText>
+        <CharacterText>
+          <character_id>286_masked</character_id>
+          <text>
+            <text>
+              <string>No worries. But keep a distance to Mother Atari...</string>
+              <string>Tja du veit...</string>
+              <string>えええと。。。</string>
+            </text>
+          </text>
+        </CharacterText>
+
+      </texts>
+
+
+    </SerializedScene>
+
+
   </scenes>
 
   <CRTSettings>
