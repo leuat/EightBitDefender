@@ -6,5 +6,10 @@
       <name>testlevel</name>
       <crtSettings_id>crt</crtSettings_id>
     </SerializedGameLevel>
+    <SerializedGameLevel>
+      <mapName>cave1</mapName>
+      <name>cave1</name>
+      <crtSettings_id>crt</crtSettings_id>
+    </SerializedGameLevel>
   </levels>
 </SerializedGameLevels>

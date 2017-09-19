@@ -105,7 +105,7 @@
 				float dist = clamp(length(dir)*1.0-0.35,0,1.0);
 				float distKeep = dist;
 				dir = normalize(dir);
-				dist = pow(dist, 4);
+				dist = pow(dist*1.5, 4);
 				uv -= dir*dist*strength;
 
 				vignette = clamp(clamp(1.0-distKeep*distKeep*_vignetteDistance*10,0,1),0,1);
@@ -122,6 +122,8 @@
 				float vignette;
 				uv = radialDistort(uv, _radialDistort*10, vignette);
 				fixed4 col = tex2D(_MainTex, uv);
+				if (uv.x < 0 || uv.x>1 || uv.y < 0 || uv.y>1)
+					col.xyz = float3(0, 0, 0);
 				col.xyz = _pixelBlend*col.xyz + (1-_pixelBlend)*pixelsColor(i.uv, col.xyz)*1;
 				col.xyz *= vignette;
 			

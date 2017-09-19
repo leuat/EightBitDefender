@@ -55,13 +55,19 @@ namespace LemonSpawn
             return category.sprites[curFrame];
         }
 
+
+
         public void Update()
         {
             time += Time.deltaTime;
+            if (category == null)
+                return;
+
             if (time > category.animSpeed)
             {
                 time = 0;
                 curFrame = (curFrame + 1) % category.noFrames;
+                getSprite();
             }
         }
 
@@ -177,6 +183,9 @@ namespace LemonSpawn
                     int pj = j + (int)cj - sizeY / 2;
                     DisplayMapCompositeItem dmi = mapItems[i, j];
 
+ 
+
+
                     MapCompositeItem mi = map.get(pi, pj);
 
                     if (mi == null)
@@ -184,6 +193,7 @@ namespace LemonSpawn
 
                     else
                     {
+                        mi.Update();
                         dmi.setActive(true);
 
                         dmi.Attach(mi);
@@ -223,6 +233,13 @@ namespace LemonSpawn
             for (int i = 0; i < items.Length; i++)
                 if (items[i] != null)
                     items[i].UpdateCategory();
+
+        }
+        public void Update()
+        {
+            for (int i = 0; i < items.Length; i++)
+                if (items[i] != null)
+                    items[i].Update();
 
         }
     }
@@ -287,7 +304,7 @@ namespace LemonSpawn
                 float scale = 1f / sizeX * 13f;
                 if (Mathf.PerlinNoise(x * scale, y * scale) > 0.5)
                     d = 3;
-                map[i] = new MapCompositeItem(Random.Range(1 + d, 3 + d),0,fg);
+                map[i] = new MapCompositeItem(Random.Range(1 + d, 3 + d),fg,0);
                 x++;
                 if (x >= sizeX - 1)
                 {
@@ -304,7 +321,7 @@ namespace LemonSpawn
                 return null;
 
             if (i >= 0 && i < sizeX && j >= 0 && j < sizeY)
-                return map[i + sizeY * j];
+                return map[i + sizeX * j];
 
             return null;
         }

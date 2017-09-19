@@ -47,31 +47,53 @@
 
 
     <MapCategory>
-    <id>3</id>
-    <name>Tree1</name>
-    <description>Tree 1</description>
-    <texture>Tiles/tree_test1</texture>
-    <noFrames>1</noFrames>
-    <foreground>true</foreground>
-    <collosion>true</collosion>
-    <animSpeed>0</animSpeed>
-      <maincategory>1</maincategory>
-      <subcategory>tree</subcategory>
-
-    </MapCategory>
-
-    <MapCategory>
       <id>3</id>
       <name>Tree1</name>
-      <description>Tree 2</description>
+      <description>Tree 1</description>
       <texture>Tiles/tree_test1</texture>
       <noFrames>1</noFrames>
       <foreground>true</foreground>
       <collosion>true</collosion>
       <animSpeed>0</animSpeed>
-      <maincategory>2</maincategory>
+      <maincategory>1</maincategory>
       <subcategory>tree</subcategory>
+    </MapCategory>
 
+    <MapCategory>
+      <id>6</id>
+      <name>VectorTree</name>
+      <description>Vectortr33</description>
+      <texture>Foreground/tree_vector_1</texture>
+      <noFrames>1</noFrames>
+      <collosion>true</collosion>
+      <animSpeed>0</animSpeed>
+      <maincategory>1</maincategory>
+      <subcategory>tree</subcategory>
+    </MapCategory>
+
+
+    <MapCategory>
+      <id>7</id>
+      <name>Frog1</name>
+      <description>Le Frog!</description>
+      <texture>Monsters/frog1</texture>
+      <noFrames>3</noFrames>
+      <collosion>false</collosion>
+      <animSpeed>0.1</animSpeed>
+      <maincategory>2</maincategory>
+      <subcategory>monsters</subcategory>
+    </MapCategory>
+
+    <MapCategory>
+      <id>8</id>
+      <name>Flower1</name>
+      <description>c64 løøv flower</description>
+      <texture>Foreground/flower1_c64</texture>
+      <noFrames>1</noFrames>
+      <collosion>false</collosion>
+      <animSpeed>0.1</animSpeed>
+      <maincategory>2</maincategory>
+      <subcategory>flower</subcategory>
     </MapCategory>
 
   </categories>

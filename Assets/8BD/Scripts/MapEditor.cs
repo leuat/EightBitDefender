@@ -4,6 +4,8 @@ using UnityEngine;
 using LemonSpawn;
 using MoonSharp.Interpreter;
 using UnityEngine.UI;
+using UnityEngine.Experimental.UIElements;
+using System.IO;
 
 namespace LemonSpawn
 {
@@ -36,7 +38,28 @@ namespace LemonSpawn
         private MapCategory currentCategory = null;
         private List<List<MapCategory>> allCategories;
 
-        
+        private List<GameObject> panels = new List<GameObject>(); // pnlEdit, pnlCreateNew, pnlLoad;
+        private Dropdown drpLoad;
+        private string[] strPanels = new string[] { "pnlEdit", "pnlCreateNew", "pnlLoad" };
+
+
+        private void FindPanels()
+        {
+            foreach (string s in strPanels)
+                panels.Add(GameObject.Find(s));
+        }
+
+        public void setPanel(string s)
+        {
+            foreach (GameObject g in panels)
+            {
+                if (g.name == s)
+                    g.SetActive(true);
+                else g.SetActive(false);
+            }
+        }
+
+
         private void Init()
         {
             editTypes.Clear();
@@ -45,6 +68,27 @@ namespace LemonSpawn
             editTypes.Add(new EditType(2, "Foreground", 0));
 
             allCategories = SerializedMapCategories.mapCategories.getAllCategories();
+            FindPanels();
+            drpLoad = GameObject.Find("drpLoad").GetComponent<Dropdown>();
+
+            setPanel("pnlLoad");
+            PopulateLoad();
+
+        }
+
+        public void onPnlLoad()
+        {
+            setPanel("pnlLoad");
+        }
+
+        public void onPnlEdit()
+        {
+            setPanel("pnlEdit");
+        }
+
+        public void onPnlCreateNew()
+        {
+            setPanel("pnlCreateNew");
         }
 
         double MoonSharpFactorial()
@@ -87,7 +131,73 @@ namespace LemonSpawn
             Util.SetText("lblCurrentType", editTypes[currentEditType].name);
 
             if (currentCategory != null)
-                GameObject.Find("imgCurrent").GetComponent<Image>().sprite = currentCategory.sprites[0];
+            {
+                GameObject go = GameObject.Find("imgCurrent");
+                if (go!=null) 
+                    go.GetComponent<UnityEngine.UI.Image>().sprite = currentCategory.sprites[0];
+            }
+        }
+
+
+        public void PopulateLoad()
+        {
+            if (drpLoad == null)
+                return;
+            drpLoad.options.Clear();
+            /*          DirectoryInfo info = new DirectoryInfo(Application.dataPath + "/8BD/Resources/Maps/");
+                      FileInfo[] fileInfo = info.GetFiles();
+                      foreach (FileInfo f in fileInfo)
+                      {
+                          string name = f.Name.Remove(f.Name.Length - 4, 4);
+                          Dropdown.OptionData d = new Dropdown.OptionData();
+                          d.text = name;
+                          cbx.options.Add(d);
+                      }*/
+            string name = "";
+            if (currentLevel != null)
+                name = currentLevel.sz.name;
+            int i = 0;
+            foreach (SerializedGameLevel gl in SerializedGameLevels.gameLevels.levels)
+            {
+                Dropdown.OptionData d = new Dropdown.OptionData();
+                d.text = gl.name;
+                drpLoad.options.Add(d);
+                if (d.text == name)
+                    drpLoad.value = i;
+                i++;
+            }
+ 
+        }
+        public void LoadLevelFromDropdown()
+        {
+            Dropdown cbx = GameObject.Find("drpLoad").GetComponent<Dropdown>();
+
+            currentLevel.Destroy();
+            currentLevel = SerializedGameLevels.getLevel(cbx.options[cbx.value].text);
+
+        }
+
+
+        public void CreateNew()
+        {
+            SerializedGameLevel gl = new SerializedGameLevel();
+            gl.crtSettings_id = "crt";
+            gl.mapName = GameObject.Find("inpMapName").GetComponent<InputField>().text;
+            gl.name = GameObject.Find("inpNewName").GetComponent<InputField>().text;
+
+            Map2D map = new Map2D();
+            int x = int.Parse(GameObject.Find("inpX").GetComponent<InputField>().text);
+            int y = int.Parse(GameObject.Find("inpY").GetComponent<InputField>().text);
+            map.Create(x, y);
+            Map2D.Save(map, gl.mapName);
+
+            SerializedGameLevels.gameLevels.levels.Add(gl);
+            SaveAll();
+
+            currentLevel.Destroy();
+            currentLevel = SerializedGameLevels.getLevel(gl.name);
+
+
         }
 
         public void SaveAll()
@@ -96,36 +206,24 @@ namespace LemonSpawn
             Debug.Log("Saving : " + currentLevel.sz.mapName);
             Map2D.Save(currentLevel.map, currentLevel.sz.mapName);
             UnityEditor.AssetDatabase.Refresh();
+            PopulateLoad();
         }
 
         // Update is called once per frame
 
-        void Update()
+        void UpdateColorBackground()
         {
-
-            UpdateText();
-            int curid = allCategories[currentEditType][editTypes[currentEditType].currentID].id;
-            if (currentCategory == null || currentCategory.id != curid)
-            {
-                currentCategory = SerializedMapCategories.mapCategories.get(curid);
-            }
-
-            
-
             if (currentItem != null)
                 currentItem.items[MapCompositeItem.BACKGROUND].color = Color.white;
-
-
             currentItem = currentLevel.map.get((int)targetPos.x, (int)targetPos.y);
+            
             if (currentItem != null)
                 currentItem.items[MapCompositeItem.BACKGROUND].color = new Color(0.45f, 0.8f, 1.5f);
 
-            currentLevel.dMap.Update(currentPos.x, currentPos.y);
+        }
 
-            float t = 0.6f;
-            currentPos = t * currentPos + (1 - t) * targetPos;
-
-
+        void InputKeys()
+        {
             if (Input.GetKeyUp(KeyCode.Alpha1))
             {
                 editTypes[currentEditType].currentID = (editTypes[currentEditType].currentID + 1) % allCategories[currentEditType].Count;
@@ -139,7 +237,7 @@ namespace LemonSpawn
 
             if (Input.GetKeyUp(KeyCode.R))
             {
-                currentEditType = (currentEditType + 1)%editTypes.Count;
+                currentEditType = (currentEditType + 1) % editTypes.Count;
                 //currentItem.items[MapCompositeItem.BACKGROUND].newId(currentItem.items[MapCompositeItem.BACKGROUND].id + 1);
             }
             if (Input.GetKeyUp(KeyCode.E))
@@ -153,9 +251,9 @@ namespace LemonSpawn
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 EditType e = editTypes[currentEditType];
-                currentItem.items[e.idx].newId(  currentCategory.id);
+                currentItem.items[e.idx].newId(currentCategory.id);
             }
-            
+
             if (Input.GetKeyUp(KeyCode.Backspace))
             {
                 EditType e = editTypes[currentEditType];
@@ -170,6 +268,33 @@ namespace LemonSpawn
             if (Input.GetKeyDown("right"))
                 targetPos.x += 1;
 
+
+        }
+
+        void HideAllPanels()
+        {
+
+        }
+
+        void Update()
+        {
+
+            UpdateText();
+            int curid = allCategories[currentEditType][editTypes[currentEditType].currentID].id;
+//          Debug.Log(curid);
+
+            if (currentCategory == null || currentCategory.id != curid)
+                currentCategory = SerializedMapCategories.mapCategories.get(curid);
+
+            UpdateColorBackground();
+    
+
+            currentLevel.dMap.Update(currentPos.x, currentPos.y);
+
+            float t = 0.6f;
+            currentPos = t * currentPos + (1 - t) * targetPos;
+
+            InputKeys();
 
 
         }
