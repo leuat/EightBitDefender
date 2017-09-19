@@ -167,6 +167,32 @@
       <tint_g>0.9</tint_g>
       <tint_b>0.3</tint_b>
     </SerializedCRTSettings>
+    <SerializedCRTSettings>
+      <settings_id>crt2</settings_id>
+      <pixels>640</pixels>
+      <radialDistort>0.2</radialDistort>
+      <vignetteDistance>0.3</vignetteDistance>
+      <tintStrength>0.0</tintStrength>
+      <pixelBlend>0.2</pixelBlend>
+      <gamma>1</gamma>
+      <correction>0.1</correction>
+      <tint_r>1</tint_r>
+      <tint_g>0.9</tint_g>
+      <tint_b>0.3</tint_b>
+    </SerializedCRTSettings>
+    <SerializedCRTSettings>
+      <settings_id>green</settings_id>
+      <pixels>512</pixels>
+      <radialDistort>0.2</radialDistort>
+      <vignetteDistance>0.3</vignetteDistance>
+      <tintStrength>1.0</tintStrength>
+      <pixelBlend>0</pixelBlend>
+      <gamma>2</gamma>
+      <correction>0.3</correction>
+      <tint_r>0</tint_r>
+      <tint_g>1</tint_g>
+      <tint_b>0</tint_b>
+    </SerializedCRTSettings>
   </CRTSettings>
 
 </SerializedScenes>

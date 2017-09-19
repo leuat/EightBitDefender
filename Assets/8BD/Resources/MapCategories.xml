@@ -89,13 +89,51 @@
       <name>Flower1</name>
       <description>c64 løøv flower</description>
       <texture>Foreground/flower1_c64</texture>
-      <noFrames>1</noFrames>
+      <noFrames>2</noFrames>
       <collosion>false</collosion>
-      <animSpeed>0.1</animSpeed>
+      <animSpeed>0.5</animSpeed>
       <maincategory>2</maincategory>
       <subcategory>flower</subcategory>
     </MapCategory>
 
+    <MapCategory>
+      <id>9</id>
+      <name>CGAmonster1</name>
+      <description>CGA Monster1</description>
+      <texture>Monsters/cgamonster1</texture>
+      <noFrames>4</noFrames>
+      <collosion>false</collosion>
+      <animSpeed>0.1</animSpeed>
+      <maincategory>2</maincategory>
+      <subcategory>monster</subcategory>
+
+    </MapCategory>
+    <MapCategory>
+      <id>10</id>
+      <name>C64 water</name>
+      <description>c64 water</description>
+      <texture>Tiles/water_c64</texture>
+      <noFrames>2</noFrames>
+      <collosion>false</collosion>
+      <animSpeed>0.15</animSpeed>
+      <maincategory>0</maincategory>
+      <subcategory>water</subcategory>
+    </MapCategory>
+
+  <MapCategory>
+    <id>11</id>
+    <name>Tree2</name>
+    <description>Tree 2</description>
+    <texture>Foreground/tree2</texture>
+    <noFrames>1</noFrames>
+    <foreground>true</foreground>
+    <collosion>true</collosion>
+    <animSpeed>0</animSpeed>
+    <maincategory>1</maincategory>
+    <subcategory>tree</subcategory>
+  </MapCategory>
+
   </categories>
+
 
 </SerializedMapCategories>

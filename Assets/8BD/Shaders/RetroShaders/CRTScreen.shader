@@ -115,6 +115,32 @@
 				return uv;
 			}
 
+			float3 CGAShader(float3 c) {
+				const float3x3 rgb_to_wcm = float3x3(1, -1, 0, 1, 0, -1, -1, 1, 1);
+
+				float3 rgba = c;
+				float3 wcm = mul(rgb_to_wcm, rgba);
+				float3 rgb = dot(wcm, float3(1, 1, 1)) < 0.4
+					? float3(0, 0, 0)
+					: wcm.x > wcm.y
+					? (wcm.x > wcm.z ? float3(1, 1, 1) : float3(1, 0, 1))
+					: (wcm.y > wcm.z ? float3(0, 1, 1) : float3(1, 0, 1));
+				return rgb;
+			}
+
+			float3 CGAShader2(float3 c) {
+				const float3x3 rgb_to_wcm = float3x3(1, -1, 0, 1, 0, -1, -1, 1, 1);
+
+				float3 rgba = c;
+				float3 wcm = mul(rgb_to_wcm, rgba);
+				float3 rgb = dot(wcm, float3(1, 1, 1)) < 0.4
+					? float3(0, 0, 0)
+					: wcm.x > wcm.y
+					? (wcm.x > wcm.z ? float3(1, 1, 0) : float3(0, 1, 0))
+					: (wcm.y > wcm.z ? float3(1, 0, 0) : float3(0, 1, 0));
+				return rgb;
+			}
+
 			fixed4 frag (v2f i) : SV_Target
 			{
 				float2 uv = pixelize(i.uv);
@@ -122,8 +148,10 @@
 				float vignette;
 				uv = radialDistort(uv, _radialDistort*10, vignette);
 				fixed4 col = tex2D(_MainTex, uv);
+				//col.xyz = CGAShader2(1.0*col.xyz);
 				if (uv.x < 0 || uv.x>1 || uv.y < 0 || uv.y>1)
 					col.xyz = float3(0, 0, 0);
+
 				col.xyz = _pixelBlend*col.xyz + (1-_pixelBlend)*pixelsColor(i.uv, col.xyz)*1;
 				col.xyz *= vignette;
 			
