@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SerializedGameLevels xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <levels>
+    <SerializedGameLevel>
+      <mapName>test_map1</mapName>
+      <name>testlevel</name>
+      <crtSettings_id>crt</crtSettings_id>
+    </SerializedGameLevel>
+  </levels>
+</SerializedGameLevels>

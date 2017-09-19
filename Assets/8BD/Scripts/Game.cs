@@ -16,6 +16,7 @@ namespace LemonSpawn
             SerializedEntities.se = SerializedEntities.DeSerialize(Constants.EntitiesXML);
             SerializedScenes.szScenes = SerializedScenes.DeSerialize(Constants.ScenesXML);
             SerializedMapCategories.mapCategories = SerializedMapCategories.DeSerialize(Constants.CategoriesXML);
+            SerializedGameLevels.gameLevels = SerializedGameLevels.DeSerialize(Constants.GameLevelsXML);
 
         }
 

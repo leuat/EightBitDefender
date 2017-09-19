@@ -6,7 +6,7 @@ using UnityEngine;
 namespace LemonSpawn
 {
 
-    public class GameLevel
+    public class GameFightLevel
     {
 //        public Scenario scenario = new Scenario();
 
@@ -22,7 +22,7 @@ namespace LemonSpawn
         }
 
 
-        public GameLevel()
+        public GameFightLevel()
         {
         }
 

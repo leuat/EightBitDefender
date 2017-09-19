@@ -1079,6 +1079,15 @@ namespace LemonSpawn
             return (value % rangeZero);
         }
 
+        static public void SetText(string name, string text)
+        {
+            GameObject go = GameObject.Find(name);
+            if (go != null)
+                go.GetComponent<Text>().text = text;
+
+        }
+
+
         static public Texture2D GetRTPixels(RenderTexture rt, Texture2D tex)
         {
             // Remember currently active render texture

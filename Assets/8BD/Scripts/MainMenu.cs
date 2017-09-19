@@ -11,12 +11,12 @@ namespace LemonSpawn
 
 
         // Use this for initialization
-        GameLevel gl = new GameLevel();
+        GameFightLevel gl = new GameFightLevel();
 
         public void LoadGame()
         {
             //            Application.LoadLevel(1);
-            GameLevel.DestroyAll();
+            GameFightLevel.DestroyAll();
             SceneManager.LoadScene(1);
         }
 

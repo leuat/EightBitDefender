@@ -216,7 +216,7 @@ namespace LemonSpawn
             particle.V = dir;
 
             if (Random.value < GameSettings.birthMessageProbability && serializedEntity.birthTexts.Count > 0)
-                GameLevel.messages.Add(serializedEntity.birthTexts[Random.Range(0, serializedEntity.birthTexts.Count)], Messages.MessageType.Good, pos);
+                GameFightLevel.messages.Add(serializedEntity.birthTexts[Random.Range(0, serializedEntity.birthTexts.Count)], Messages.MessageType.Good, pos);
 
         }
 
@@ -234,10 +234,10 @@ namespace LemonSpawn
             {
                 if (serializedEntity.deathSound != "")
                     SoundUtil.PlaySound(serializedEntity.deathSound, 1);
-                GameLevel.explosions.Add("Explosion", particle.P + new Vector3(0,0,-0.1f), 1, particle.V, 2, 11);
+                GameFightLevel.explosions.Add("Explosion", particle.P + new Vector3(0,0,-0.1f), 1, particle.V, 2, 11);
 
                 if (Random.value < GameSettings.deathMessageProbability && serializedEntity.deathTexts.Count>0)
-                    GameLevel.messages.Add(serializedEntity.deathTexts[Random.Range(0, serializedEntity.deathTexts.Count)], Messages.MessageType.Bad, particle.P);
+                    GameFightLevel.messages.Add(serializedEntity.deathTexts[Random.Range(0, serializedEntity.deathTexts.Count)], Messages.MessageType.Bad, particle.P);
 
 
             }
@@ -306,7 +306,7 @@ namespace LemonSpawn
             if (Zoom.x < 0.2)
             { // True death
                 killObject = true;
-                GameLevel.messages.Add("$" + serializedEntity.value, Messages.MessageType.Neutral, particle.P);
+                GameFightLevel.messages.Add("$" + serializedEntity.value, Messages.MessageType.Neutral, particle.P);
 
             }
 

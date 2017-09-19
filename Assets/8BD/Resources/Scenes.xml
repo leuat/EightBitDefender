@@ -156,11 +156,11 @@
     </SerializedCRTSettings>
     <SerializedCRTSettings>
       <settings_id>crt</settings_id>
-      <pixels>320</pixels>
-      <radialDistort>1</radialDistort>
+      <pixels>1024</pixels>
+      <radialDistort>0.2</radialDistort>
       <vignetteDistance>0.3</vignetteDistance>
       <tintStrength>0.0</tintStrength>
-      <pixelBlend>0.2</pixelBlend>
+      <pixelBlend>0.0</pixelBlend>
       <gamma>1</gamma>
       <correction>0</correction>
       <tint_r>1</tint_r>

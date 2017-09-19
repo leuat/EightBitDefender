@@ -9,7 +9,7 @@ namespace LemonSpawn
     public class MainGame : MonoBehaviour
     {
 
-        GameLevel gl = new GameLevel();
+        GameFightLevel gl = new GameFightLevel();
         Dialogue dialogue = null;
         int currentDialogue = 0;
         string[] dialogues = new string[] { "testscene", "testscene2" };

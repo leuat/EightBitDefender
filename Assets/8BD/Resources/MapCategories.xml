@@ -9,6 +9,8 @@
       <texture>Tiles/grass_test1</texture>
       <noFrames>1</noFrames>
       <animSpeed>0</animSpeed>
+      <maincategory>0</maincategory>
+      <subcategory>grass</subcategory>
     </MapCategory>
     <MapCategory>
       <id>2</id>
@@ -17,9 +19,34 @@
       <texture>Tiles/stone_test1</texture>
       <noFrames>1</noFrames>
       <animSpeed>0</animSpeed>
+      <maincategory>0</maincategory>
+      <subcategory>stone</subcategory>
     </MapCategory>
-  
-  <MapCategory>
+
+    <MapCategory>
+      <id>4</id>
+      <name>grass1_c64</name>
+      <description>Grass 1</description>
+      <texture>Tiles/grass_c64_1</texture>
+      <noFrames>1</noFrames>
+      <animSpeed>0</animSpeed>
+      <maincategory>0</maincategory>
+      <subcategory>grass</subcategory>
+    </MapCategory>
+
+    <MapCategory>
+      <id>5</id>
+      <name>stone_c64</name>
+      <description>Grass 1</description>
+      <texture>Tiles/tile_c64_rock1</texture>
+      <noFrames>1</noFrames>
+      <animSpeed>0</animSpeed>
+      <maincategory>0</maincategory>
+      <subcategory>stone</subcategory>
+    </MapCategory>
+
+
+    <MapCategory>
     <id>3</id>
     <name>Tree1</name>
     <description>Tree 1</description>
@@ -28,8 +55,25 @@
     <foreground>true</foreground>
     <collosion>true</collosion>
     <animSpeed>0</animSpeed>
-  </MapCategory>
-  
+      <maincategory>1</maincategory>
+      <subcategory>tree</subcategory>
+
+    </MapCategory>
+
+    <MapCategory>
+      <id>3</id>
+      <name>Tree1</name>
+      <description>Tree 2</description>
+      <texture>Tiles/tree_test1</texture>
+      <noFrames>1</noFrames>
+      <foreground>true</foreground>
+      <collosion>true</collosion>
+      <animSpeed>0</animSpeed>
+      <maincategory>2</maincategory>
+      <subcategory>tree</subcategory>
+
+    </MapCategory>
+
   </categories>
 
 </SerializedMapCategories>

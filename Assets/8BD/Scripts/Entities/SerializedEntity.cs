@@ -20,7 +20,8 @@ namespace LemonSpawn
         public bool collision = false;
         public float animSpeed = 1;
         public Sprite[] sprites;
-
+        public int maincategory;
+        public string subcategory;
 
         public void Initialize()
         {
@@ -59,6 +60,25 @@ namespace LemonSpawn
                     return mc;
             return null;
         }
+
+        public List<MapCategory> getCategories(int cat)
+        {
+            List<MapCategory> c = new List<MapCategory>();
+            foreach (MapCategory mc in categories)
+                if (mc.maincategory == cat)
+                    c.Add(mc);
+            return c;
+        }
+
+        public List<List<MapCategory>> getAllCategories()
+        {
+            List<List<MapCategory>> c = new List<List<MapCategory>>();
+            c.Add(getCategories(0));
+            c.Add(getCategories(1));
+            c.Add(getCategories(2));
+            return c;
+        }
+
 
         public static SerializedMapCategories DeSerialize(string filename)
         {
