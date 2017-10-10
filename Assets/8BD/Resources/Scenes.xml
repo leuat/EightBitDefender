@@ -3,6 +3,9 @@
   <characters>
     <SerializedCharacter>
       <texture>Princess_c64</texture>
+      <iconTexture></iconTexture>
+      <moveTexture>monsters/cgamonster1</moveTexture>
+
       <character_id>princess_64</character_id>
       <name>
           <text>
@@ -169,13 +172,13 @@
     </SerializedCRTSettings>
     <SerializedCRTSettings>
       <settings_id>crt2</settings_id>
-      <pixels>640</pixels>
+      <pixels>1024</pixels>
       <radialDistort>0.2</radialDistort>
       <vignetteDistance>0.3</vignetteDistance>
       <tintStrength>0.0</tintStrength>
       <pixelBlend>0.2</pixelBlend>
-      <gamma>1</gamma>
-      <correction>0.1</correction>
+      <gamma>3</gamma>
+      <correction>0.4</correction>
       <tint_r>1</tint_r>
       <tint_g>0.9</tint_g>
       <tint_b>0.3</tint_b>
@@ -193,6 +196,55 @@
       <tint_g>1</tint_g>
       <tint_b>0</tint_b>
     </SerializedCRTSettings>
+    <SerializedCRTSettings>
+      <settings_id>gameboy</settings_id>
+      <pixels>640</pixels>
+      <radialDistort>0.2</radialDistort>
+      <vignetteDistance>0.3</vignetteDistance>
+      <tintStrength>0.0</tintStrength>
+      <pixelBlend>0.50</pixelBlend>
+      <gamma>1</gamma>
+      <correction>0.0</correction>
+      <tint_r>1</tint_r>
+      <tint_g>1</tint_g>
+      <tint_b>1</tint_b>
+      <monoType>2</monoType>
+      <monoStrength>1</monoStrength>
+      <monoRange>0.4</monoRange>
+    </SerializedCRTSettings>
+    <SerializedCRTSettings>
+      <settings_id>cga1</settings_id>
+      <pixels>640</pixels>
+      <radialDistort>0.2</radialDistort>
+      <vignetteDistance>0.3</vignetteDistance>
+      <tintStrength>0.0</tintStrength>
+      <pixelBlend>0.00</pixelBlend>
+      <gamma>1</gamma>
+      <correction>0.0</correction>
+      <tint_r>1</tint_r>
+      <tint_g>1</tint_g>
+      <tint_b>1</tint_b>
+      <monoType>0</monoType>
+      <monoStrength>1</monoStrength>
+      <monoRange>0.4</monoRange>
+    </SerializedCRTSettings>
+    <SerializedCRTSettings>
+      <settings_id>cga2</settings_id>
+      <pixels>640</pixels>
+      <radialDistort>0.2</radialDistort>
+      <vignetteDistance>0.3</vignetteDistance>
+      <tintStrength>0.0</tintStrength>
+      <pixelBlend>0.00</pixelBlend>
+      <gamma>1</gamma>
+      <correction>0.0</correction>
+      <tint_r>1</tint_r>
+      <tint_g>1</tint_g>
+      <tint_b>1</tint_b>
+      <monoType>1</monoType>
+      <monoStrength>1</monoStrength>
+      <monoRange>0.4</monoRange>
+    </SerializedCRTSettings>
+
   </CRTSettings>
 
 </SerializedScenes>

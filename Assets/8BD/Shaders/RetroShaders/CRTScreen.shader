@@ -72,14 +72,16 @@
 				uv.y = ((int)(uv.y*_pixels)) / _pixels;
 				return uv;
 			}
+			uniform float _line;
 			float3 pixelsColor(float2 uv, float3 color) 
 			{
 				float ss = 1;// 0.25;// 0.25;// 0.25;
 				int x = ((int)(uv.x*_pixelsColorX*ss));
-				int y = ((int)(uv.y*_pixelsColorY*ss));
+				int y = ((int)(uv.y*_pixelsColorY*(ss+_line)));
 				float3 retCol =  float3(0, 0, 0);
 
-				float s = 2;
+				float s = 1;
+				float c = color.r + color.g + color.b;
 
 				if (y % 2 == 0) {
 					if (x % 2 == 0)
@@ -91,12 +93,13 @@
 				{
 					
 					if (x % 2 == 0)
-						retCol = float3(0, 0, color.b*s);
-					else retCol = color;
+						retCol.b = color.b*s;// float3(0, 0, color.b*s);
+					else 
+						retCol = color;
 
 				}
 				retCol *= 1;
-
+				
 				return retCol;
 			}
 
@@ -115,20 +118,30 @@
 				return uv;
 			}
 
+
+			uniform float3 _monoColor0;
+			uniform float3 _monoColor1;
+			uniform float3 _monoColor2;
+			uniform float3 _monoColor3;
+			uniform float3 _monoColor4;
+
+			uniform float _monoRange;
+			uniform float _monoStrength;
+
+
 			float3 CGAShader(float3 c) {
 				const float3x3 rgb_to_wcm = float3x3(1, -1, 0, 1, 0, -1, -1, 1, 1);
-
-				float3 rgba = c;
-				float3 wcm = mul(rgb_to_wcm, rgba);
-				float3 rgb = dot(wcm, float3(1, 1, 1)) < 0.4
-					? float3(0, 0, 0)
+//				float3 rgba = c;
+				float3 wcm = mul(rgb_to_wcm, c);
+				float3 rgb = dot(wcm, float3(1, 1, 1)) < _monoRange
+					? _monoColor0
 					: wcm.x > wcm.y
-					? (wcm.x > wcm.z ? float3(1, 1, 1) : float3(1, 0, 1))
-					: (wcm.y > wcm.z ? float3(0, 1, 1) : float3(1, 0, 1));
-				return rgb;
+					? (wcm.x > wcm.z ? _monoColor1 : _monoColor2)
+					: (wcm.y > wcm.z ? _monoColor3 : _monoColor4);
+				return _monoStrength*rgb + (1-_monoStrength)*c;
 			}
 
-			float3 CGAShader2(float3 c) {
+/*			float3 CGAShader2(float3 c) {
 				const float3x3 rgb_to_wcm = float3x3(1, -1, 0, 1, 0, -1, -1, 1, 1);
 
 				float3 rgba = c;
@@ -140,6 +153,23 @@
 					: (wcm.y > wcm.z ? float3(1, 0, 0) : float3(0, 1, 0));
 				return rgb;
 			}
+			*/
+
+			float4 getTexture(float2 uv) {
+				float4 c = float4(0, 0, 0, 0);
+				float N = 8;
+				for (int i = 0; i < N; i++) {
+					float r = 0.30/_pixels;
+					float theta = i / N * 2 * 3.14159265;
+					float2 d = float2(r*sin(theta), r*cos(theta));
+					c += tex2D(_MainTex, uv + d);
+				}
+				return c / N;
+
+
+				return tex2D(_MainTex, uv);
+
+			}
 
 			fixed4 frag (v2f i) : SV_Target
 			{
@@ -147,17 +177,22 @@
 
 				float vignette;
 				uv = radialDistort(uv, _radialDistort*10, vignette);
-				fixed4 col = tex2D(_MainTex, uv);
-				//col.xyz = CGAShader2(1.0*col.xyz);
+
+				half4 col = getTexture(uv);
+
+
 				if (uv.x < 0 || uv.x>1 || uv.y < 0 || uv.y>1)
 					col.xyz = float3(0, 0, 0);
 
+				col.xyz = Gamma(Tint(col.xyz));
+				col.xyz = CGAShader(1.0*col.xyz);
+
 				col.xyz = _pixelBlend*col.xyz + (1-_pixelBlend)*pixelsColor(i.uv, col.xyz)*1;
-				col.xyz *= vignette;
 			
 				// just invert the colors
 //				col = 1 - col;
-				col.xyz = Gamma(Tint(col.xyz));
+				col.xyz *= vignette;
+
 				return col;
 			}
 			ENDCG

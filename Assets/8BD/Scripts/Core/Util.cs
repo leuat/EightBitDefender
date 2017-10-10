@@ -185,7 +185,7 @@ namespace LemonSpawn
         public static List<LSprite> sprites = new List<LSprite>();
         public static List<LASprite> a_sprites = new List<LASprite>();
 
-        public static Sprite Get(string name)
+        public static Sprite GetTexture(string name)
         {
             foreach (LSprite s in sprites)
                 if (s.name == name)

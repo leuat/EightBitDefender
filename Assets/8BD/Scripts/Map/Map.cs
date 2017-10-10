@@ -15,6 +15,7 @@ namespace LemonSpawn
         public int id = 1;
         public string command = "";
         public string text = "";
+        public float rotation = 0;
 
         [System.NonSerialized]
         float time = 0;
@@ -52,7 +53,10 @@ namespace LemonSpawn
                 return null;
             if (category.sprites == null)
                 return null;
-            return category.sprites[curFrame];
+            if (curFrame<=category.sprites.Length-1)
+                return category.sprites[curFrame];
+
+            return null;
         }
 
 
@@ -119,6 +123,7 @@ namespace LemonSpawn
                 for (int i = 0; i < items.Length; i++) {
                     items[i].sr.sprite = mci.items[i].getSprite();
                     items[i].sr.color = mci.items[i].color;
+                    items[i].go.transform.rotation = Quaternion.Euler(0, 0, mci.items[i].rotation);
                 }
 
             }
@@ -132,17 +137,29 @@ namespace LemonSpawn
 
 
 
+        public Vector3 getRealPosition(int x, int y, float z)
+        {
+            return new Vector3((x - sizeX / 2) * dx, (y - sizeY / 2) * dy, z);
+        }
+
+
+        public static float Z_BACKGROUND = 0;
+        public static float Z_MIDDLE = 0.005f;
+        public static float Z_CHARS = 0.0075f;
+        public static float Z_FRONT = 0.01f;
+
+
         private DisplayMapCompositeItem Initialize(int x, int y)
         {
             DisplayMapCompositeItem dmi = new DisplayMapCompositeItem();
 
-            float ls = 1 / Sprites.Get("Tiles/grass_test1").bounds.size.x;
+            float ls = 1 / Sprites.GetTexture("Tiles/grass_test1").bounds.size.x;
 
-            dmi.items[0].Create(parent, new Vector3((x - sizeX / 2) * dx, (y - sizeY / 2) * dy, 0), dx, dy, ls);
+            dmi.items[0].Create(parent, getRealPosition(x,y, Z_BACKGROUND), dx, dy, ls);
 
-            dmi.items[1].Create(parent, new Vector3((x - sizeX / 2) * dx, (y - sizeY / 2) * dy, -0.005f), dx, dy, ls);
+            dmi.items[1].Create(parent, getRealPosition(x, y,-Z_MIDDLE), dx, dy, ls);
 
-            dmi.items[2].Create(parent, new Vector3((x - sizeX / 2) * dx, (y - sizeY / 2) * dy, -0.01f), dx, dy, ls);
+            dmi.items[2].Create(parent, getRealPosition(x, y,  -Z_FRONT), dx, dy, ls);
 
             return dmi;
         }

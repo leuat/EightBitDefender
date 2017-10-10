@@ -235,12 +235,12 @@ namespace LemonSpawn
                     editTypes[currentEditType].currentID = allCategories[currentEditType].Count - 1;
             }
 
-            if (Input.GetKeyUp(KeyCode.R))
+            if (Input.GetKeyUp(KeyCode.F2))
             {
                 currentEditType = (currentEditType + 1) % editTypes.Count;
                 //currentItem.items[MapCompositeItem.BACKGROUND].newId(currentItem.items[MapCompositeItem.BACKGROUND].id + 1);
             }
-            if (Input.GetKeyUp(KeyCode.E))
+            if (Input.GetKeyUp(KeyCode.F1))
             {
                 currentEditType = (currentEditType - 1);
                 if (currentEditType < 0)
@@ -248,11 +248,19 @@ namespace LemonSpawn
                 //currentItem.items[MapCompositeItem.BACKGROUND].newId(currentItem.items[MapCompositeItem.BACKGROUND].id - 1);
             }
 
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeyCode.E))
             {
                 EditType e = editTypes[currentEditType];
                 currentItem.items[e.idx].newId(currentCategory.id);
             }
+
+            if (Input.GetKeyUp(KeyCode.R))
+            {
+                EditType e = editTypes[currentEditType];
+                currentItem.items[e.idx].rotation += 90;
+            }
+
+
 
             if (Input.GetKeyUp(KeyCode.Backspace))
             {

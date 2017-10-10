@@ -133,6 +133,82 @@
     <subcategory>tree</subcategory>
   </MapCategory>
 
+    <MapCategory>
+      <id>12</id>
+      <name>Tree3_c64_00</name>
+      <description>Tree c64</description>
+      <texture>Middle/largetree1_c64_00</texture>
+      <noFrames>1</noFrames>
+      <collosion>false</collosion>
+      <animSpeed>0</animSpeed>
+      <maincategory>2</maincategory>
+      <subcategory>tree</subcategory>
+    </MapCategory>
+
+    <MapCategory>
+      <id>13</id>
+      <name>Tree3_c64_01</name>
+      <description>Tree c64</description>
+      <texture>Middle/largetree1_c64_01</texture>
+      <noFrames>1</noFrames>
+      <collosion>false</collosion>
+      <animSpeed>0</animSpeed>
+      <maincategory>2</maincategory>
+      <subcategory>tree</subcategory>
+    </MapCategory>
+
+
+    <MapCategory>
+      <id>14</id>
+      <name>Tree3_c64_10</name>
+      <description>Tree c64</description>
+      <texture>Middle/largetree1_c64_10</texture>
+      <noFrames>1</noFrames>
+      <collosion>true</collosion>
+      <animSpeed>0</animSpeed>
+      <maincategory>2</maincategory>
+      <subcategory>tree</subcategory>
+    </MapCategory>
+
+    <MapCategory>
+      <id>15</id>
+      <name>Tree3_c64_11</name>
+      <description>Tree c64</description>
+      <texture>Middle/largetree1_c64_11</texture>
+      <noFrames>1</noFrames>
+      <collosion>true</collosion>
+      <animSpeed>0</animSpeed>
+      <maincategory>2</maincategory>
+      <subcategory>tree</subcategory>
+    </MapCategory>
+
+    <MapCategory>
+      <id>16</id>
+      <name>Walk_planks_x</name>
+      <description>Planks</description>
+      <texture>Middle/walk_planks</texture>
+      <noFrames>1</noFrames>
+      <collosion>true</collosion>
+      <animSpeed>0</animSpeed>
+      <maincategory>1</maincategory>
+      <subcategory>floor</subcategory>
+    </MapCategory>
+
+    <MapCategory>
+      <id>18</id>
+      <name>Walk_planks_end</name>
+      <description>Planks</description>
+      <texture>Middle/walk_planks_end</texture>
+      <noFrames>1</noFrames>
+      <collosion>true</collosion>
+      <animSpeed>0</animSpeed>
+      <maincategory>1</maincategory>
+      <subcategory>floor</subcategory>
+    </MapCategory>
+
+
+
+
   </categories>
 
 

@@ -5,6 +5,15 @@
       <mapName>test_map1</mapName>
       <name>testlevel</name>
       <crtSettings_id>crt2</crtSettings_id>
+
+      <!--      <characters>
+        <SerializedCharacterInstance>
+          
+          
+        </SerializedCharacterInstance>
+      </characters>
+
+-->      
     </SerializedGameLevel>
     <SerializedGameLevel>
       <mapName>cave1</mapName>

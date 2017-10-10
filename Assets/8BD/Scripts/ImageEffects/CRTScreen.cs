@@ -8,6 +8,15 @@ namespace LemonSpawn
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]
 
+    /*    public class MonoColor
+        {
+            public Color[] colors;
+            public MonoColor(Color[] c)
+            {
+                colors = c;
+            }
+        }
+        */
     public class CRTScreen : MonoBehaviour
     {
         public Shader shader;
@@ -15,6 +24,17 @@ namespace LemonSpawn
         private int pixelWidth = -1;
         //        public Color tint = Color.white;
         public SerializedCRTSettings settings = new SerializedCRTSettings();
+
+
+        public static Vector3[] MonoColorsCGA1 = new Vector3[]
+        { new Vector3(0,0,0), new Vector3(1, 1, 1), new Vector3(1,0,1), new Vector3(0,1,1), new Vector3(1,0,1) };
+        public static Vector3[] MonoColorsCGA2 = new Vector3[]
+        { new Vector3(0,0,0), new Vector3(1, 1, 0), new Vector3(0,1,0), new Vector3(1,0,0), new Vector3(0,1,0) };
+        public static Vector3[] MonoColorsGameBoy = new Vector3[]
+        { new Vector3(15f/255f,56f/255f,15/255f), new Vector3(155/255f, 188/255f, 15/255f),
+            new Vector3(48/255f,98/255f,48/255f), new Vector3(139/255f,172/255f,15/255f), new Vector3(48f/255f,98/255f,48/255f) };
+
+        public static Vector3[][] MonoColors = new Vector3[][] { MonoColorsCGA1, MonoColorsCGA2, MonoColorsGameBoy };
 
 
 
@@ -37,6 +57,8 @@ namespace LemonSpawn
                 return 1;
             if (Screen.width < 1600)
                 return 2;
+
+            return 2;
             if (Screen.width < 2048)
                 return 4;
             if (Screen.width < 3000)
@@ -68,11 +90,29 @@ namespace LemonSpawn
             mat.SetFloat("_tintStrength", settings.tintStrength);
             mat.SetFloat("_gamma", settings.gamma);
             mat.SetFloat("_correction", settings.correction);
+            mat.SetFloat("_monoRange", settings.monoRange);
+            mat.SetFloat("_monoStrength", settings.monoStrength);
+
+//          mat.SetFloat("_line", Mathf.Sin(Time.time * 1.2341f)*0.01f);
+//            mat.SetFloat("_line", Random.value*0.001f);
+            mat.SetFloat("_line", 0.001f);
+
+            Vector3[] cols = MonoColors[settings.monoType];
+            for (int i=0;i<cols.Length;i++)
+            {
+                mat.SetVector("_monoColor" + i, cols[i]);
+            }
+
+
             Graphics.Blit(source, destination, mat, 0);
         }
 
         void OnDisable()
         {
+
+//            Material m = (Material)Resources.Loa("MYCoolMat");
+  //          m.shader
+
             if (_material)
             {
                 DestroyImmediate(_material);

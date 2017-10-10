@@ -16,6 +16,7 @@ namespace LemonSpawn
         public string description;
         public string texture;
         public int noFrames;
+        public float rotation = 0;
         public bool foreground = false;
         public bool collision = false;
         public float animSpeed = 1;
@@ -29,7 +30,7 @@ namespace LemonSpawn
             if (noFrames == 1)
             {
                 sprites = new Sprite[noFrames];
-                sprites[0] = Sprites.Get(texture);
+                sprites[0] = Sprites.GetTexture(texture);
                 if (sprites[0] == null)
                     Debug.Log("COULD not find sprite: " + texture);
 

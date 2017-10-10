@@ -9,12 +9,35 @@ using UnityEngine;
 namespace LemonSpawn
 {
 
+
+    [System.Serializable]
+    public class SerializedCharacterInstance
+    {
+        public string character_id;
+//        public string map_id;
+        public float pos_x, pos_y;
+        public float health;
+        private SerializedCharacter character;
+        public void Initialize()
+        {
+            character = SerializedScenes.szScenes.getCharacter(character_id);
+            if (character == null)
+                Debug.Log("Error: cannot find serialiedcharacterinstance '" + character_id + "' in serializedcharacters!");
+        }
+        public SerializedCharacter getCharacter()
+        {
+            return character;
+        }
+    }
+
+
     [System.Serializable]
     public class SerializedGameLevel
     {
         public string mapName;
         public string name;
         public string crtSettings_id;
+        public List<SerializedCharacterInstance> characters = new List<SerializedCharacterInstance>();
 
     }
 
@@ -25,11 +48,13 @@ namespace LemonSpawn
         public Map2D map;
         public DisplayMap dMap = new DisplayMap();
         private CRTScreen crtScreen;
+        public Characters characters;
 
         public GameLevel(SerializedGameLevel s)
         {
             sz = s;
             Initialize();
+            characters = new Characters(s);
         }
 
         private void Test()
@@ -61,7 +86,7 @@ namespace LemonSpawn
 
         public void Update()
         {
-             
+            characters.Update(dMap);             
         }
 
     }
@@ -100,6 +125,10 @@ namespace LemonSpawn
             TextAsset textAsset = (TextAsset)Resources.Load(filename);
             TextReader textReader = new StringReader(textAsset.text);
             SerializedGameLevels sz = (SerializedGameLevels)deserializer.Deserialize(textReader);
+            foreach (SerializedGameLevel sgl in sz.levels)
+                foreach (SerializedCharacterInstance sci in sgl.characters)
+                    sci.Initialize();
+
             textReader.Close();
             return sz;
         }

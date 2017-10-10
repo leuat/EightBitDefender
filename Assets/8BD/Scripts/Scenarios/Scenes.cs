@@ -44,12 +44,13 @@ namespace LemonSpawn
     public class SerializedCharacter
     {
         public string texture;
+        public string iconTexture;
+        public string moveTexture;
         public string character_id;
         public LString name = new LString();
         public string font;
         public string fcolor, bcolor;
     }
-
 
     [System.Serializable]
     public class SerializedScene

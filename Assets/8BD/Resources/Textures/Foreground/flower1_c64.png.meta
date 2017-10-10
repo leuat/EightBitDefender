@@ -1,13 +1,11 @@
 fileFormatVersion: 2
-guid: 48937cc5457ae2b42be778fb5ce22871
-timeCreated: 1505839665
+guid: 0a3261bf289a3bd48b7958a988e2568c
+timeCreated: 1505997903
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: flower1_c64-sheet_0
-    21300002: flower1_c64-sheet_1
-    21300004: flower1_c64_0
-    21300006: flower1_c64_1
+    21300000: flower1_c64_0
+    21300002: flower1_c64_1
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -34,7 +32,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 2
     aniso: -1
     mipBias: -1
     wrapU: 1

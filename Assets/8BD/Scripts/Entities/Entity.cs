@@ -149,7 +149,7 @@ namespace LemonSpawn
 //            sr.sortingLayerName = "Foreground";
   //          sr.sortingLayerID = 9;
             sr.color = Color.white;
-            sr.sprite = Sprites.Get(bp.texture);
+            sr.sprite = Sprites.GetTexture(bp.texture);
             if (hasCollider)
                 go.AddComponent<BoxCollider2D>();
   //          go.AddComponent<Rigidbody2D>();
